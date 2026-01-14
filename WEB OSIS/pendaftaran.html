@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran OSIS - SMK TRITECH INFORMATIKA</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Logo Lightbox Styles - IMPROVED */
+        .logo-lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .logo-lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .lightbox-content {
+            background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
+            border-radius: 25px;
+            padding: 50px;
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            animation: slideUp 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 25px 80px rgba(46, 125, 50, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #2E7D32;
+        }
+        
+        .lightbox-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #2E7D32, #4CAF50, #2E7D32);
+        }
+        
+        @keyframes slideUp {
+            0% {
+                transform: translateY(100px) scale(0.8);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .lightbox-logo {
+            width: 250px;
+            height: 250px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 8px solid #2E7D32;
+            box-shadow: 0 15px 40px rgba(46, 125, 50, 0.4);
+            position: relative;
+            animation: logoGlow 3s infinite alternate;
+            transition: all 0.5s ease;
+        }
+        
+        .lightbox-logo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(46, 125, 50, 0.6);
+        }
+        
+        @keyframes logoGlow {
+            0% {
+                box-shadow: 0 15px 40px rgba(46, 125, 50, 0.4);
+            }
+            100% {
+                box-shadow: 0 15px 40px rgba(46, 125, 50, 0.7), 0 0 30px rgba(46, 125, 50, 0.3);
+            }
+        }
+        
+        .lightbox-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .lightbox-logo:hover img {
+            transform: scale(1.1);
+        }
+        
+        .lightbox-text h2 {
+            color: #2E7D32;
+            font-size: 32px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .lightbox-text p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+            line-height: 1.6;
+            padding: 0 20px;
+        }
+        
+        .close-lightbox {
+            background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 100%);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 30px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+            font-size: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .close-lightbox::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .close-lightbox:hover::before {
+            left: 100%;
+        }
+        
+        .close-lightbox:hover {
+            background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.4);
+        }
+        
+        .close-lightbox:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+        
+        /* Logo Hover Effect */
+        .logo {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-icon {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            background: rgba(46, 125, 50, 0.1);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+        
+        .logo:hover .logo-icon::after {
+            opacity: 1;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            background: rgba(46, 125, 50, 0.2);
+        }
+        
+        .logo-icon img {
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover .logo-icon img {
+            transform: scale(1.1);
+        }
+        
+        /* Pulsating Effect on Hover */
+        @keyframes pulseGlow {
+            0% {
+                box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(46, 125, 50, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(46, 125, 50, 0);
+            }
+        }
+        
+        .logo:hover .logo-icon {
+            animation: pulseGlow 1.5s infinite;
+        }
+        
+        /* Info Text on Hover */
+        .logo::before {
+            content: 'Klik untuk melihat detail';
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: #2E7D32;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent #2E7D32 transparent;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover::before {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        .logo:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Lightbox close button (X) styling */
+        .lightbox-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 28px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .lightbox-close-btn:hover {
+            background: rgba(46, 125, 50, 0.1);
+            color: #2E7D32;
+            transform: rotate(90deg);
+        }
+        
+        /* Lightbox additional info */
+        .lightbox-details {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .detail-item i {
+            color: #2E7D32;
+        }
+        
+        /* Logo loading animation */
+        @keyframes logoSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .logo-lightbox.loading .lightbox-logo {
+            animation: logoSpin 1s linear infinite;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .lightbox-content {
+                padding: 30px;
+                width: 95%;
+            }
+            
+            .lightbox-logo {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .lightbox-text h2 {
+                font-size: 24px;
+            }
+            
+            .logo::before {
+                display: none; /* Hide tooltip on mobile */
+            }
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 100px 0 60px;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .page-header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        /* Pendaftaran Section */
+        .pendaftaran-section {
+            padding: 80px 0;
+        }
+        
+        .pendaftaran-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 80px;
+        }
+        
+        .pendaftaran-info h2 {
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .pendaftaran-info h2 i {
+            color: var(--secondary);
+        }
+        
+        .info-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+        
+        .info-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-light);
+            color: var(--white);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        
+        .info-text h3 {
+            font-size: 20px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .info-text p, .info-text li {
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 5px;
+        }
+        
+        .info-text ul, .info-text ol {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+        
+        .info-text li {
+            margin-bottom: 8px;
+        }
+        
+        .keuntungan-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .keuntungan-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .keuntungan-item i {
+            color: var(--primary);
+            font-size: 18px;
+        }
+        
+        .keuntungan-item p {
+            font-size: 14px;
+            margin: 0;
+        }
+        
+        .contact-info-box {
+            background-color: var(--primary);
+            color: var(--white);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+        
+        .contact-info-box h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .contact-info-box h3 i {
+            color: var(--secondary);
+        }
+        
+        .contact-info-box p {
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .contact-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--white);
+            text-decoration: none;
+            padding: 12px 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+        
+        .contact-method:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .contact-method i {
+            font-size: 20px;
+            width: 24px;
+            text-align: center;
+        }
+        
+        .pendaftaran-form-container {
+            background-color: var(--white);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        
+        .form-header {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 25px;
+        }
+        
+        .form-header h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-header h2 i {
+            color: var(--secondary);
+        }
+        
+        .form-header p {
+            opacity: 0.9;
+        }
+        
+        .pendaftaran-form {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--primary);
+        }
+        
+        .required {
+            color: #e53935;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+        }
+        
+        .file-upload {
+            position: relative;
+        }
+        
+        .file-upload input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .file-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            background-color: var(--light-gray);
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .file-label:hover {
+            background-color: #e9e9e9;
+        }
+        
+        .file-label i {
+            color: var(--primary);
+        }
+        
+        .file-name {
+            display: block;
+            margin-top: 8px;
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        small {
+            display: block;
+            margin-top: 5px;
+            color: var(--gray);
+            font-size: 12px;
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+        }
+        
+        .checkbox-item label {
+            margin: 0;
+            font-weight: normal;
+            color: var(--dark);
+        }
+        
+        .form-group.checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .form-group.checkbox input[type="checkbox"] {
+            width: auto;
+            margin-top: 5px;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn-submit, .btn-reset {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .btn-submit {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        .btn-submit:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+        }
+        
+        .btn-reset {
+            background-color: var(--light-gray);
+            color: var(--dark);
+        }
+        
+        .btn-reset:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .form-footer {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            text-align: center;
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        .form-footer strong {
+            color: var(--primary);
+        }
+        
+        .faq-section {
+            background-color: var(--light-gray);
+            border-radius: 15px;
+            padding: 40px;
+        }
+        
+        .faq-section h2 {
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .faq-section h2 i {
+            color: var(--secondary);
+        }
+        
+        .faq-container {
+            margin-top: 20px;
+        }
+        
+        .faq-item {
+            background-color: var(--white);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .faq-question {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .faq-question:hover {
+            background-color: rgba(46, 125, 50, 0.05);
+        }
+        
+        .faq-question h3 {
+            font-size: 18px;
+            color: var(--primary);
+            margin: 0;
+        }
+        
+        .faq-question i {
+            color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 0 20px 20px;
+            max-height: 500px;
+        }
+        
+        .faq-answer p {
+            color: var(--gray);
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        @media (max-width: 992px) {
+            .pendaftaran-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .keuntungan-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .faq-section {
+                padding: 25px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .page-header h1 {
+                font-size: 36px;
+            }
+            
+            .pendaftaran-info h2, .faq-section h2 {
+                font-size: 24px;
+            }
+            
+            .info-card {
+                flex-direction: column;
+            }
+            
+            .contact-method span {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo Lightbox - IMPROVED -->
+    <div class="logo-lightbox" id="logoLightbox">
+        <button class="lightbox-close-btn" id="closeLightboxBtn">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="lightbox-content">
+            <div class="lightbox-logo">
+                <img src="osis.jpg" alt="Logo OSIS">
+            </div>
+            <div class="lightbox-text">
+                <h2>OSIS SMK TRITECH INFORMATIKA</h2>
+             
+                
+                <div class="lightbox-details">
+                    <div class="detail-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Periode: 2025/2026</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-users"></i>
+                        <span>Pengurus: 48 Anggota</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-trophy"></i>
+                        <span>Moto: Merangkul Untuk Beraksi</span>
+                    </div>
+                </div>
+                
+                <button class="close-lightbox" id="closeLightbox">
+                    <i class="fas fa-check"></i> Oke, Saya Mengerti
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="logo" id="logoClick" style="cursor: pointer;" title="Klik untuk melihat detail logo">
+                <!-- Logo OSIS dengan foto -->
+                <div class="logo-icon">
+                    <img src="osis.jpg" alt="Logo OSIS">
+                </div>
+                <div class="logo-text">
+                    <h1>OSIS</h1>
+                    <p>SMK TRITECH INFORMATIKA</p>
+                </div>
+            </div>
+            
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="navbar" id="navbar">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> HOME</a></li>
+                    <li><a href="pengurus.html"><i class="fas fa-user-friends"></i> PENGURUS OSIS</a></li>
+                    <li><a href="progja.html"><i class="fas fa-tasks"></i> PROGRAM KERJA</a></li>
+                    <li><a href="events.html"><i class="fas fa-calendar-alt"></i> EVENTS</a></li>
+                    <li><a href="galeri.html"><i class="fas fa-images"></i> GALERI & BERITA</a></li>
+                    <li><a href="pendaftaran.html" class="active btn-daftar"><i class="fas fa-user-plus"></i> PENDAFTARAN</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Pendaftaran OSIS</h1>
+            <p>Bergabunglah dengan OSIS SMK TRITECH INFORMATIKA untuk mengembangkan potensi diri</p>
+        </div>
+    </section>
+
+    <section class="pendaftaran-section">
+        <div class="container">
+            <div class="pendaftaran-content">
+                <div class="pendaftaran-info">
+                    <h2><i class="fas fa-info-circle"></i> Informasi Pendaftaran</h2>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="far fa-calendar-check"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>Periode Pendaftaran</h3>
+                            <p><strong>10 - 15 Januari 2026</strong></p>
+                            <p>Pendaftaran dibuka selama 5 hari kerja</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>Syarat Peserta</h3>
+                            <ul>
+                                <li>Siswa aktif SMK Tritech Informatika kelas X atau XI</li>
+                                <li>Memiliki nilai akademik rata-rata minimal 75</li>
+                                <li>Memiliki kemampuan komunikasi dan kerja sama yang baik</li>
+                                <li>Berkomitmen mengikuti seluruh kegiatan OSIS</li>
+                                <li>Tidak terlibat dalam pelanggaran tata tertib sekolah</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>Tahapan Seleksi</h3>
+                            <ol>
+                                <li>Pendaftaran online melalui formulir ini</li>
+                                <li>Seleksi administrasi dan nilai akademik</li>
+                                <li>Tes tertulis (pengetahuan umum dan kepemimpinan)</li>
+                                <li>Wawancara dengan pengurus OSIS dan pembina</li>
+                                <li>Pengumuman calon anggota terpilih</li>
+                                <li>Masa percobaan selama 1 bulan</li>
+                            </ol>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>Keuntungan Bergabung</h3>
+                            <div class="keuntungan-grid">
+                                <div class="keuntungan-item">
+                                    <i class="fas fa-user-tie"></i>
+                                    <p>Pengembangan kepemimpinan</p>
+                                </div>
+                                <div class="keuntungan-item">
+                                    <i class="fas fa-network-wired"></i>
+                                    <p>Memperluas jaringan pertemanan</p>
+                                </div>
+                                <div class="keuntungan-item">
+                                    <i class="fas fa-certificate"></i>
+                                    <p>Sertifikat pengalaman organisasi</p>
+                                </div>
+                                <div class="keuntungan-item">
+                                    <i class="fas fa-lightbulb"></i>
+                                    <p>Mengasah kreativitas dan inovasi</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-info-box">
+                        <h3><i class="fas fa-question-circle"></i> Masih ada pertanyaan?</h3>
+                        <p>Hubungi kami melalui:</p>
+                        <div class="contact-methods">
+                            <a href="https://wa.me/6281234567890" class="contact-method" target="_blank">
+                                <i class="fab fa-whatsapp"></i>
+                                <span>WhatsApp: 0812-3456-7890</span>
+                            </a>
+                            <a href="mailto:osis@smktritech.sch.id" class="contact-method">
+                                <i class="fas fa-envelope"></i>
+                                <span>Email: osis@smktritech.sch.id</span>
+                            </a>
+                            <a href="https://instagram.com/osistritech" class="contact-method" target="_blank">
+                                <i class="fab fa-instagram"></i>
+                                <span>Instagram: @osistritech</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="pendaftaran-form-container">
+                    <div class="form-header">
+                        <h2><i class="fas fa-edit"></i> Formulir Pendaftaran</h2>
+                        <p>Isi formulir berikut dengan data yang benar dan lengkap</p>
+                    </div>
+                    
+                    <form id="formPendaftaran" class="pendaftaran-form">
+                        <div class="form-group">
+                            <label for="nama">Nama Lengkap <span class="required">*</span></label>
+                            <input type="text" id="nama" name="nama" required placeholder="Masukkan nama lengkap">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="kelas">Kelas <span class="required">*</span></label>
+                                <select id="kelas" name="kelas" required>
+                                    <option value="">Pilih Kelas</option>
+                                    <option value="X">Kelas X</option>
+                                    <option value="XI">Kelas XI</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="jurusan">Jurusan <span class="required">*</span></label>
+                                <select id="jurusan" name="jurusan" required>
+                                    <option value="">Pilih Jurusan</option>
+                                    <option value="TKJ">Teknik Komputer dan Jaringan</option>
+                                    <option value="RPL">Rekayasa Perangkat Lunak</option>
+                                    <option value="MM">Multimedia</option>
+                                    <option value="AK">Akuntansi</option>
+                                    <option value="OTKP">Otomatisasi Tata Kelola Perkantoran</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="nis">Nomor Induk Siswa (NIS) <span class="required">*</span></label>
+                            <input type="text" id="nis" name="nis" required placeholder="Masukkan NIS">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email <span class="required">*</span></label>
+                            <input type="email" id="email" name="email" required placeholder="nama@email.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="telp">Nomor Telepon/WhatsApp <span class="required">*</span></label>
+                            <input type="tel" id="telp" name="telp" required placeholder="08xxxxxxxxxx">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Bidang yang diminati <span class="required">*</span></label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="bidang1" name="bidang" value="Humas">
+                                    <label for="bidang1">Bidang Humas</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="bidang2" name="bidang" value="Olahraga">
+                                    <label for="bidang2">Bidang Olahraga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="bidang3" name="bidang" value="Agama">
+                                    <label for="bidang3">Bidang Agama</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="bidang4" name="bidang" value="Media Kreatif">
+                                    <label for="bidang4">Bidang Media Kreatif</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="alasan">Alasan ingin bergabung dengan OSIS <span class="required">*</span></label>
+                            <textarea id="alasan" name="alasan" rows="4" required placeholder="Jelaskan alasan Anda ingin bergabung dengan OSIS"></textarea>
+                        </div>
+                        
+                        <div class="form-group checkbox">
+                            <input type="checkbox" id="agree" name="agree" required>
+                            <label for="agree">Saya menyatakan bahwa data yang diisi adalah benar dan siap mengikuti semua tahapan seleksi. <span class="required">*</span></label>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn-submit">
+                                <i class="fas fa-paper-plane"></i> Kirim Pendaftaran
+                            </button>
+                            <button type="reset" class="btn-reset">
+                                <i class="fas fa-redo"></i> Reset Form
+                            </button>
+                        </div>
+                        
+                        <div class="form-footer">
+                            <p><span class="required">*</span> Menandakan bidang yang wajib diisi</p>
+                            <p>Pendaftaran akan ditutup pada <strong>15 Januari 2026 pukul 23:59 WIB</strong></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="faq-section">
+                <h2><i class="far fa-question-circle"></i> Pertanyaan yang Sering Diajukan (FAQ)</h2>
+                
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Apakah ada biaya pendaftaran?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Tidak ada biaya pendaftaran untuk menjadi anggota OSIS. Semua proses seleksi dan kegiatan OSIS sepenuhnya gratis.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Berapa lama masa kepengurusan OSIS?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Masa kepengurusan OSIS adalah satu tahun ajaran, yaitu dari Juli 2025 hingga Juni 2026.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Apakah nilai akademik sangat berpengaruh?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Nilai akademik menjadi salah satu pertimbangan, namun yang lebih penting adalah komitmen, semangat, dan kemampuan kerja sama.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Bolehkah memilih lebih dari satu bidang minat?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Ya, Anda boleh memilih lebih dari satu bidang yang diminati. Namun pada akhirnya, penempatan akan disesuaikan dengan kebutuhan dan hasil seleksi.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Kapan pengumuman hasil seleksi?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Pengumuman hasil seleksi akan diumumkan pada 25 Januari 2026 melalui website OSIS dan papan pengumuman sekolah.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <img src="osis.jpg" alt="Logo OSIS">
+                        </div>
+                        <div class="logo-text">
+                            <h3>OSIS</h3>
+                            <p>SMK TRITECH INFORMATIKA</p>
+                        </div>
+                    </div>
+                    <p class="footer-description">Membentuk generasi muda yang berkualitas melalui berbagai kegiatan positif dan pengembangan karakter.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Kontak Kami</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> Jl. Bhayangkara No. 484, Indra Kasih, Kec. Medan Tembung, Kota Medan, Sumatera Utara 20221.</li>
+                        <li><i class="fas fa-phone"></i> (021) 1234-5678</li>
+                        <li><i class="fas fa-envelope"></i> osis@smktritech.sch.id</li>
+                        <li><i class="fas fa-clock"></i> Senin - Jumat, 08:00 - 15:00 WIB</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Newsletter</h4>
+                    <p>Dapatkan informasi terbaru tentang kegiatan OSIS</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Email Anda" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 OSIS SMK TRITECH INFORMATIKA. All Rights Reserved.</p>
+                <p>Designed with <i class="fas fa-heart"></i> by OSIS Web Team</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Logo Lightbox functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const logoClick = document.getElementById('logoClick');
+            const logoLightbox = document.getElementById('logoLightbox');
+            const closeLightboxBtn = document.getElementById('closeLightboxBtn');
+            const closeLightbox = document.getElementById('closeLightbox');
+            
+            // Open lightbox when logo is clicked
+            if (logoClick) {
+                logoClick.addEventListener('click', function() {
+                    logoLightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+            
+            // Close lightbox when close button is clicked
+            if (closeLightboxBtn) {
+                closeLightboxBtn.addEventListener('click', function() {
+                    logoLightbox.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            }
+            
+            // Close lightbox when close button is clicked
+            if (closeLightbox) {
+                closeLightbox.addEventListener('click', function() {
+                    logoLightbox.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            }
+            
+            // Close lightbox when clicking outside the content
+            if (logoLightbox) {
+                logoLightbox.addEventListener('click', function(e) {
+                    if (e.target === logoLightbox) {
+                        logoLightbox.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+            
+            // Close lightbox with ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && logoLightbox.classList.contains('active')) {
+                    logoLightbox.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // Form submission
+            const form = document.getElementById('formPendaftaran');
+            
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    let isValid = true;
+                    const requiredFields = form.querySelectorAll('[required]');
+                    
+                    requiredFields.forEach(field => {
+                        if (!field.value.trim()) {
+                            isValid = false;
+                            field.style.borderColor = '#e53935';
+                        } else {
+                            field.style.borderColor = '#ddd';
+                        }
+                    });
+                    
+                    const checkboxes = form.querySelectorAll('input[name="bidang"]:checked');
+                    if (checkboxes.length === 0) {
+                        isValid = false;
+                        alert('Silakan pilih minimal satu bidang yang diminati.');
+                    }
+                    
+                    if (isValid) {
+                        const submitBtn = form.querySelector('.btn-submit');
+                        const originalText = submitBtn.innerHTML;
+                        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+                        submitBtn.disabled = true;
+                        
+                        setTimeout(() => {
+                            alert('Pendaftaran berhasil dikirim! Kami akan menghubungi Anda melalui email/WhatsApp untuk informasi selanjutnya.');
+                            form.reset();
+                            
+                            submitBtn.innerHTML = originalText;
+                            submitBtn.disabled = false;
+                        }, 1500);
+                    } else {
+                        alert('Silakan lengkapi semua bidang yang wajib diisi.');
+                    }
+                });
+            }
+            
+            // FAQ functionality
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', () => {
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    item.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

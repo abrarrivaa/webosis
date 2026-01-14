@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Kerja - OSIS SMK TRITECH INFORMATIKA</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Logo Lightbox Styles */
+        .logo-lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .logo-lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .lightbox-content {
+            background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
+            border-radius: 25px;
+            padding: 50px;
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            animation: slideUp 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 25px 80px rgba(46, 125, 50, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #2E7D32;
+        }
+        
+        .lightbox-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #2E7D32, #4CAF50, #2E7D32);
+        }
+        
+        @keyframes slideUp {
+            0% { transform: translateY(100px) scale(0.8); opacity: 0; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .lightbox-logo {
+            width: 250px;
+            height: 250px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 8px solid #2E7D32;
+            box-shadow: 0 15px 40px rgba(46, 125, 50, 0.4);
+            position: relative;
+            animation: logoGlow 3s infinite alternate;
+            transition: all 0.5s ease;
+        }
+        
+        .lightbox-logo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(46, 125, 50, 0.6);
+        }
+        
+        @keyframes logoGlow {
+            0% { box-shadow: 0 15px 40px rgba(46, 125, 50, 0.4); }
+            100% { box-shadow: 0 15px 40px rgba(46, 125, 50, 0.7), 0 0 30px rgba(46, 125, 50, 0.3); }
+        }
+        
+        .lightbox-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .lightbox-logo:hover img {
+            transform: scale(1.1);
+        }
+        
+        .lightbox-text h2 {
+            color: #2E7D32;
+            font-size: 32px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .lightbox-text p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+            line-height: 1.6;
+            padding: 0 20px;
+        }
+        
+        .close-lightbox {
+            background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 100%);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 30px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+            font-size: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .close-lightbox::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .close-lightbox:hover::before {
+            left: 100%;
+        }
+        
+        .close-lightbox:hover {
+            background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.4);
+        }
+        
+        .close-lightbox:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+        
+        /* Logo Hover Effect */
+        .logo {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-icon {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            background: rgba(46, 125, 50, 0.1);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+        
+        .logo:hover .logo-icon::after {
+            opacity: 1;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            background: rgba(46, 125, 50, 0.2);
+        }
+        
+        .logo-icon img {
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover .logo-icon img {
+            transform: scale(1.1);
+        }
+        
+        /* Pulsating Effect on Hover */
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(46, 125, 50, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(46, 125, 50, 0); }
+        }
+        
+        .logo:hover .logo-icon {
+            animation: pulseGlow 1.5s infinite;
+        }
+        
+        /* Info Text on Hover */
+        .logo::before {
+            content: 'Klik untuk melihat detail';
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: #2E7D32;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent #2E7D32 transparent;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover::before {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        .logo:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Lightbox close button (X) styling */
+        .lightbox-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 28px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .lightbox-close-btn:hover {
+            background: rgba(46, 125, 50, 0.1);
+            color: #2E7D32;
+            transform: rotate(90deg);
+        }
+        
+        /* Lightbox additional info */
+        .lightbox-details {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .detail-item i {
+            color: #2E7D32;
+        }
+        
+        @media (max-width: 768px) {
+            .lightbox-content {
+                padding: 30px;
+                width: 95%;
+            }
+            
+            .lightbox-logo {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .lightbox-text h2 {
+                font-size: 24px;
+            }
+            
+            .logo::before {
+                display: none;
+            }
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 100px 0 60px;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .page-header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        .program-kerja {
+            padding: 80px 0;
+        }
+        
+        .category-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 50px;
+        }
+        
+        .filter-btn {
+            padding: 12px 30px;
+            background-color: var(--light-gray);
+            border: none;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 16px;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--primary);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+        }
+        
+        .program-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .program-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .program-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .program-icon {
+            width: 70px;
+            height: 70px;
+            background-color: var(--primary-light);
+            color: var(--white);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .program-card h3 {
+            font-size: 22px;
+            color: var(--primary);
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+        
+        .program-card p {
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+        
+        /* PERBAIKAN: PROGRAM INFO SEJAJAR SATU BARIS */
+        .program-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: nowrap;
+            gap: 10px;
+            width: 100%;
+            min-height: 24px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            color: var(--gray);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        
+        .info-item i {
+            color: var(--primary);
+            font-size: 14px;
+        }
+        
+        .program-status {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            z-index: 2;
+        }
+        
+        .status-berjalan {
+            background-color: rgba(46, 125, 50, 0.1);
+            color: var(--primary);
+        }
+        
+        .status-akandatang {
+            background-color: rgba(255, 152, 0, 0.1);
+            color: var(--secondary);
+        }
+        
+        .bidang-section {
+            margin-bottom: 60px;
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.5s ease;
+        }
+        
+        .bidang-title {
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .bidang-title i {
+            color: var(--secondary);
+        }
+        
+        /* Hide sections by default for filter */
+        .bidang-section.hidden {
+            display: none !important;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .bidang-section.visible {
+            display: block;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .program-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .filter-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            
+            .page-header h1 {
+                font-size: 36px;
+            }
+            
+            .program-info {
+                flex-wrap: wrap;
+                justify-content: flex-start;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .page-header h1 {
+                font-size: 32px;
+            }
+            
+            .category-filter {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 10px;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .filter-btn {
+                flex-shrink: 0;
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+            
+            .bidang-title {
+                font-size: 24px;
+            }
+            
+            .program-card {
+                padding: 20px;
+            }
+            
+            .program-card h3 {
+                font-size: 20px;
+            }
+            
+            .program-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+            
+            .program-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .info-item {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo Lightbox -->
+    <div class="logo-lightbox" id="logoLightbox">
+        <button class="lightbox-close-btn" id="closeLightboxBtn">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="lightbox-content">
+            <div class="lightbox-logo">
+                <img src="osis.jpg" alt="Logo OSIS">
+            </div>
+            <div class="lightbox-text">
+                <h2>OSIS SMK TRITECH INFORMATIKA</h2>
+        
+                
+                <div class="lightbox-details">
+                    <div class="detail-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Periode: 2025/2026</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-users"></i>
+                        <span>Pengurus: 48 Anggota</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-trophy"></i>
+                        <span>Moto: Merangkul Untuk Beraksi</span>
+                    </div>
+                </div>
+                
+                <button class="close-lightbox" id="closeLightbox">
+                    <i class="fas fa-check"></i> Oke, Saya Mengerti
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="logo" id="logoClick" style="cursor: pointer;" title="Klik untuk melihat detail logo">
+                <div class="logo-icon">
+                    <img src="osis.jpg" alt="Logo OSIS">
+                </div>
+                <div class="logo-text">
+                    <h1>OSIS</h1>
+                    <p>SMK TRITECH INFORMATIKA</p>
+                </div>
+            </div>
+            
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="navbar" id="navbar">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> HOME</a></li>
+                    <li><a href="pengurus.html"><i class="fas fa-user-friends"></i> PENGURUS OSIS</a></li>
+                    <li><a href="progja.html" class="active"><i class="fas fa-tasks"></i> PROGRAM KERJA</a></li>
+                    <li><a href="events.html"><i class="fas fa-calendar-alt"></i> EVENTS</a></li>
+                    <li><a href="galeri.html"><i class="fas fa-images"></i> GALERI & BERITA</a></li>
+                    <li><a href="pendaftaran.html" class="btn-daftar"><i class="fas fa-user-plus"></i> PENDAFTARAN</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Program Kerja OSIS</h1>
+            <p>Rencana kegiatan OSIS SMK TRITECH INFORMATIKA periode 2025/2026</p>
+        </div>
+    </section>
+
+    <section class="program-kerja">
+        <div class="container">
+            <div class="section-header">
+                <h2>Program Kerja OSIS 2025/2026</h2>
+                <p>Rencana strategis dan kegiatan yang akan dilaksanakan selama satu periode kepengurusan</p>
+            </div>
+            
+            <div class="category-filter">
+                <button class="filter-btn active" data-filter="all">Semua Program</button>
+                <button class="filter-btn" data-filter="humas">Bidang Humas</button>
+                <button class="filter-btn" data-filter="olahraga">Bidang Olahraga</button>
+                <button class="filter-btn" data-filter="agama">Bidang Agama</button>
+                <button class="filter-btn" data-filter="mediakreatif">Bidang Media Kreatif</button>
+            </div>
+            
+            <!-- BIDANG HUMAS -->
+            <div class="bidang-section visible" data-category="humas">
+                <h3 class="bidang-title"><i class="fas fa-users"></i> BIDANG HUMAS</h3>
+                <div class="program-grid">
+                    <div class="program-card">
+                        <div class="program-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3>Latihan Dasar Kepemimpinan (LDK)</h3>
+                        <p>Divisi Humas berperan aktif dalam melaksanakan kegiatan Latihan Dasar Kepemimpinan yang bertujuan untuk menumbuhkan jiwa kepemimpinan, disiplin, serta tanggung jawab pada siswa.</p>
+                        <div class="program-info">
+                            <span class="info-item"><i class="fas fa-users"></i> Bidang Humas</span>
+                        </div>
+                        <span class="program-status status-berjalan">Berjalan</span>
+                    </div>
+                    
+                    <div class="program-card">
+                        <div class="program-icon">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <h3>Kolaborasi dengan OSIS Sekolah Lain</h3>
+                        <p>Sebagai upaya memperluas hubungan dan jaringan, Divisi Humas menjalin kolaborasi dengan OSIS sekolah lain.</p>
+                        <div class="program-info">
+                            <span class="info-item"><i class="fas fa-users"></i> Bidang Humas</span>
+                        </div>
+                        <span class="program-status status-akandatang">Akan Datang</span>
+                    </div>
+                    
+                    <div class="program-card">
+                        <div class="program-icon">
+                            <i class="fas fa-tree"></i>
+                        </div>
+                        <h3>Partisipasi dalam Seminar</h3>
+                        <p>Divisi Humas menyelenggarakan maupun berpartisipasi dalam kegiatan seminar yang relevan dengan dunia pendidikan.</p>
+                        <div class="program-info">
+                            <span class="info-item"><i class="fas fa-users"></i> Bidang Humas</span>
+                        </div>
+                        <span class="program-status status-akandatang">Akan Datang</span>
+                    </div>
+                    
+                    <div class="program-card">
+                        <div class="program-icon">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <h3>Kolaborasi dengan Divisi Lain</h3>
+                        <p>Dalam rangka mendukung publikasi kegiatan, Divisi Humas bekerja sama dengan divisi lain dalam membuat konten kreatif.</p>
+                        <div class="program-info">
+                            <span class="info-item"><i class="fas fa-users"></i> Bidang Humas</span>
+                        </div>
+                        <span class="program-status status-akandatang">Akan Datang</span>
+                    </div>
+                    
+                    <div class="program-card">
+                        <div class="program-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3>Pengelolaan Mading Sekolah</h3>
+                        <p>Sebagai bentuk apresiasi terhadap prestasi siswa, Divisi Humas bertanggung jawab dalam mengelola majalah dinding sekolah.</p>
+                        <div class="program-info">
+                            <span class="info-item"><i class="fas fa-users"></i> Bidang Humas</span>
+                        </div>
+                        <span class="program-status status-akandatang">Akan Datang</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- BIDANG OLAHRAGA -->
+            <div class="bidang-section visible" data-category="olahraga">
+                <h3 class="bidang-title"><i class="fas fa-futbol"></i> BIDANG OLAHRAGA</h3>
+                <div class="program-grid">
+                    <div class="program-card">
+                        <div class="program-icon">
+                            <i class="fas fa-bicycle"></i>
+                        </div>
+                        <h3>Car Free Day</h3>
+                        <p>Program ini bertujuan memberikan ruang bagi siswa/siswi untuk berinteraksi dan berolahraga dalam suasana yang menyenangkan.</p>
+                        <div class="program-info">
+                            <span class="info-item"><i class="fas fa-running"></i> Bidang Olahraga</span>
+                        </div>
+                        <span class="program-status status-akandatang">Akan Datang</span>
+                    </div>
+                    
+                    <div class="program-card">
+                        <div class="program-icon">
+                            <i class="fas fa-basketball-ball"></i>
+                        </div>
+                        <h3>Turnamen Basket Antar Kelas</h3>
+                        <p>Mengadakan turnamen basket untuk mengembangkan bakat olahraga siswa dan meningkatkan semangat sportivitas.</p>
+                        <div class="program-info">
+                            <span class="info-item"><i class="fas fa-running"></i> Bidang Olahraga</span>
+                        </div>
+                        <span class="program-status status-akandatang">Akan Datang</span>
+                    </div>
+                    
+                    <div class="program-card">
+                        <div class="program-icon">
+                            <i class="fas fa-running"></i>
+                        </div>
+                        <h3>Kegiatan Event Olahraga</h3>
+                        <p>Program ini bertujuan untuk siap berpartisipasi dalam event apapun di lingkungan sekolah maupun luar sekolah.</p>
+                        <div class="program-info">
+                            <span class="info-item"><i class="fas fa-running"></i> Bidang Olahraga</span>
+                        </div>
+                        <span class="program-status status-akandatang">Akan Datang</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- BIDANG AGAMA -->
+            <div class="bidang-section visible" data-category="agama">
+                <h3 class="bidang-title"><i class="fas fa-pray"></i> BIDANG AGAMA</h3>
+                <div class="program-grid">
+                    <div class="program-card">
+                        <div class="program-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <h3>Lomba Bernuansa Keagamaan</h3>
+                        <p>Mengadakan lomba islami (adzan, tilawah, ceramah singkat) pada momen besar seperti Maulid dan Isra Mi'raj.</p>
+                        <div class="program-info">
+                            <span class="info-item"><i class="fas fa-pray"></i> Bidang Agama</span>
+                        </div>
+                        <span class="program-status status-akandatang">Akan Datang</span>
+                    </div>
+                    
+                    <div class="program-card">
+                        <div class="program-icon">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <h3>Berbagi ke Masjid dan Panti Asuhan</h3>
+                        <p>Mengadakan kegiatan berbagi berupa infaq, sembako, atau kebutuhan pokok ke masjid terdekat maupun panti asuhan.</p>
+                        <div class="program-info">
+                            <span class="info-item"><i class="fas fa-pray"></i> Bidang Agama</span>
+                        </div>
+                        <span class="program-status status-berjalan">Berjalan</span>
+                    </div>
+                    
+                    <div class="program-card">
+                        <div class="program-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3>Event Keagamaan</h3>
+                        <p>Mengadakan acara besar keagamaan di sekolah seperti peringatan Maulid Nabi Muhammad SAW dan Isra Mi'raj.</p>
+                        <div class="program-info">
+                            <span class="info-item"><i class="fas fa-pray"></i> Bidang Agama</span>
+                        </div>
+                        <span class="program-status status-berjalan">Berjalan</span>
+                    </div>
+                    
+                    <div class="program-card">
+                        <div class="program-icon">
+                            <i class="fas fa-hands-praying"></i>
+                        </div>
+                        <h3>Shalawat Bersama di Hari Jumat</h3>
+                        <p>Mengadakan kegiatan shalawat bersama setiap hari Jumat untuk meningkatkan spiritualitas siswa.</p>
+                        <div class="program-info">
+                            <span class="info-item"><i class="fas fa-pray"></i> Bidang Agama</span>
+                        </div>
+                        <span class="program-status status-berjalan">Berjalan</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- BIDANG MEDIA KREATIF -->
+            <div class="bidang-section visible" data-category="mediakreatif">
+                <h3 class="bidang-title"><i class="fas fa-laptop"></i> BIDANG MEDIA KREATIF</h3>
+                <div class="program-grid">
+                    <div class="program-card">
+                        <div class="program-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <h3>Workshop Fotografi</h3>
+                        <p>Pelatihan dasar fotografi untuk dokumentasi kegiatan sekolah dan meningkatkan keterampilan siswa.</p>
+                        <div class="program-info">
+                            <span class="info-item"><i class="fas fa-laptop"></i> Bidang Media Kreatif</span>
+                        </div>
+                        <span class="program-status status-akandatang">Akan Datang</span>
+                    </div>
+                    
+                    <div class="program-card">
+                        <div class="program-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h3>Konten Media Sosial</h3>
+                        <p>Membuat dan mengunggah konten secara rutin di media sosial OSIS untuk memberikan informasi.</p>
+                        <div class="program-info">
+                            <span class="info-item"><i class="fas fa-laptop"></i> Bidang Media Kreatif</span>
+                        </div>
+                        <span class="program-status status-akandatang">Akan Datang</span>
+                    </div>
+                    
+                    <div class="program-card">
+                        <div class="program-icon">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <h3>Desain Grafis</h3>
+                        <p>Membuat desain grafis untuk berbagai kegiatan OSIS dan sekolah, mengembangkan kreativitas siswa.</p>
+                        <div class="program-info">
+                            <span class="info-item"><i class="fas fa-laptop"></i> Bidang Media Kreatif</span>
+                        </div>
+                        <span class="program-status status-akandatang">Akan Datang</span>
+                    </div>
+                    
+                    <div class="program-card">
+                        <div class="program-icon">
+                            <i class="fas fa-newspaper"></i>
+                        </div>
+                        <h3>Dokumentasi Kegiatan</h3>
+                        <p>Melakukan dokumentasi kegiatan OSIS maupun sekolah dalam bentuk foto maupun video.</p>
+                        <div class="program-info">
+                            <span class="info-item"><i class="fas fa-laptop"></i> Bidang Media Kreatif</span>
+                        </div>
+                        <span class="program-status status-berjalan">Berjalan</span>
+                    </div>
+                    
+                    <div class="program-card">
+                        <div class="program-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3>Produksi Video</h3>
+                        <p>Membuat video promosi sekolah serta konten kreatif yang menarik dan membangun citra positif sekolah.</p>
+                        <div class="program-info">
+                            <span class="info-item"><i class="fas fa-laptop"></i> Bidang Media Kreatif</span>
+                        </div>
+                        <span class="program-status status-akandatang">Akan Datang</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <img src="osis.jpg" alt="Logo OSIS">
+                        </div>
+                        <div class="logo-text">
+                            <h3>OSIS</h3>
+                            <p>SMK TRITECH INFORMATIKA</p>
+                        </div>
+                    </div>
+                    <p class="footer-description">Membentuk generasi muda yang berkualitas melalui berbagai kegiatan positif dan pengembangan karakter.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Kontak Kami</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> Jl. Bhayangkara No. 484, Indra Kasih, Kec. Medan Tembung, Kota Medan, Sumatera Utara 20221.</li>
+                        <li><i class="fas fa-phone"></i> (021) 1234-5678</li>
+                        <li><i class="fas fa-envelope"></i> osis@smktritech.sch.id</li>
+                        <li><i class="fas fa-clock"></i> Senin - Jumat, 08:00 - 15:00 WIB</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Newsletter</h4>
+                    <p>Dapatkan informasi terbaru tentang kegiatan OSIS</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Email Anda" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 OSIS SMK TRITECH INFORMATIKA. All Rights Reserved.</p>
+                <p>Designed with <i class="fas fa-heart"></i> by OSIS Web Team</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // ========== FILTER PROGRAM KERJA ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const bidangSections = document.querySelectorAll('.bidang-section');
+            
+            // Function untuk filter program kerja
+            function filterProgram(category) {
+                // Update active button
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.getAttribute('data-filter') === category) {
+                        btn.classList.add('active');
+                    }
+                });
+                
+                // Filter sections
+                bidangSections.forEach(section => {
+                    const sectionCategory = section.getAttribute('data-category');
+                    
+                    if (category === 'all') {
+                        section.classList.remove('hidden');
+                        section.classList.add('visible');
+                    } else if (sectionCategory === category) {
+                        section.classList.remove('hidden');
+                        section.classList.add('visible');
+                    } else {
+                        section.classList.remove('visible');
+                        section.classList.add('hidden');
+                    }
+                });
+            }
+            
+            // Add event listeners to filter buttons
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filterValue = this.getAttribute('data-filter');
+                    filterProgram(filterValue);
+                });
+            });
+            
+            // ========== LOGO LIGHTBOX FUNCTIONALITY ==========
+            const logoClick = document.querySelector('#logoClick');
+            const logoLightbox = document.getElementById('logoLightbox');
+            const closeLightbox = document.getElementById('closeLightbox');
+            const closeLightboxBtn = document.getElementById('closeLightboxBtn');
+            
+            if (logoClick && logoLightbox) {
+                // Buka lightbox saat logo diklik
+                logoClick.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    logoLightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+                
+                // Tutup lightbox saat tombol close diklik
+                if (closeLightbox) {
+                    closeLightbox.addEventListener('click', function() {
+                        logoLightbox.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    });
+                }
+                
+                if (closeLightboxBtn) {
+                    closeLightboxBtn.addEventListener('click', function() {
+                        logoLightbox.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    });
+                }
+                
+                // Tutup lightbox saat klik di luar konten
+                logoLightbox.addEventListener('click', function(e) {
+                    if (e.target === logoLightbox) {
+                        logoLightbox.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+                
+                // Tutup lightbox dengan tombol ESC
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && logoLightbox.classList.contains('active')) {
+                        logoLightbox.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+            
+            // ========== PERBAIKAN ICON PROGRAM KERJA ==========
+            updateProgramIcons();
+        });
+        
+        // Function untuk memperbaiki icon program kerja
+        function updateProgramIcons() {
+            const programIcons = document.querySelectorAll('.program-icon i');
+            
+            programIcons.forEach(icon => {
+                const cardTitle = icon.closest('.program-card')?.querySelector('h3')?.textContent || '';
+                const cardText = icon.closest('.program-card')?.querySelector('p')?.textContent || '';
+                
+                // Reset icon class
+                let newIconClass = 'fas fa-tasks'; // default
+                
+                // Humas
+                if (cardTitle.includes('LDK') || cardText.includes('kepemimpinan')) {
+                    newIconClass = 'fas fa-handshake';
+                } 
+                else if (cardTitle.includes('Kolaborasi') && cardText.includes('OSIS')) {
+                    newIconClass = 'fas fa-bullhorn';
+                }
+                else if (cardTitle.includes('Seminar')) {
+                    newIconClass = 'fas fa-tree';
+                }
+                else if (cardTitle.includes('Mading')) {
+                    newIconClass = 'fas fa-graduation-cap';
+                }
+                
+                // Olahraga
+                else if (cardTitle.includes('Car Free Day') || cardText.includes('sepeda')) {
+                    newIconClass = 'fas fa-bicycle';
+                }
+                else if (cardTitle.includes('Basket') || cardText.includes('basket')) {
+                    newIconClass = 'fas fa-basketball-ball';
+                }
+                else if (cardTitle.includes('Event Olahraga') || cardText.includes('olahraga')) {
+                    newIconClass = 'fas fa-running';
+                }
+                
+                // Agama
+                else if (cardTitle.includes('Lomba') || cardText.includes('lomba')) {
+                    newIconClass = 'fas fa-award';
+                }
+                else if (cardTitle.includes('Berbagi') || cardText.includes('infaq') || cardText.includes('panti')) {
+                    newIconClass = 'fas fa-hand-holding-heart';
+                }
+                else if (cardTitle.includes('Event Keagamaan') || cardText.includes('Maulid') || cardText.includes('Isra')) {
+                    newIconClass = 'fas fa-star';
+                }
+                else if (cardTitle.includes('Shalawat') || cardText.includes('Jumat')) {
+                    newIconClass = 'fas fa-hands-praying';
+                }
+                
+                // Media Kreatif
+                else if (cardTitle.includes('Fotografi') || cardText.includes('foto')) {
+                    newIconClass = 'fas fa-camera';
+                }
+                else if (cardTitle.includes('Media Sosial') || cardText.includes('konten')) {
+                    newIconClass = 'fas fa-video';
+                }
+                else if (cardTitle.includes('Desain') || cardText.includes('grafis')) {
+                    newIconClass = 'fas fa-paint-brush';
+                }
+                else if (cardTitle.includes('Dokumentasi')) {
+                    newIconClass = 'fas fa-newspaper';
+                }
+                else if (cardTitle.includes('Produksi Video') || cardText.includes('video')) {
+                    newIconClass = 'fas fa-code';
+                }
+                
+                // Apply the new icon
+                icon.className = newIconClass;
+            });
+        }
+    </script>
+</body>
+</html>

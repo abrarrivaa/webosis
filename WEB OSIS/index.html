@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSIS SMK TRITECH INFORMATIKA</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Logo Lightbox Styles - IMPROVED */
+        .logo-lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .logo-lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .lightbox-content {
+            background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
+            border-radius: 25px;
+            padding: 50px;
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            animation: slideUp 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 25px 80px rgba(46, 125, 50, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #2E7D32;
+        }
+        
+        .lightbox-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #2E7D32, #4CAF50, #2E7D32);
+        }
+        
+        @keyframes slideUp {
+            0% {
+                transform: translateY(100px) scale(0.8);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .lightbox-logo {
+            width: 250px;
+            height: 250px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 8px solid #2E7D32;
+            box-shadow: 0 15px 40px rgba(46, 125, 50, 0.4);
+            position: relative;
+            animation: logoGlow 3s infinite alternate;
+            transition: all 0.5s ease;
+        }
+        
+        .lightbox-logo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(46, 125, 50, 0.6);
+        }
+        
+        @keyframes logoGlow {
+            0% {
+                box-shadow: 0 15px 40px rgba(46, 125, 50, 0.4);
+            }
+            100% {
+                box-shadow: 0 15px 40px rgba(46, 125, 50, 0.7), 0 0 30px rgba(46, 125, 50, 0.3);
+            }
+        }
+        
+        .lightbox-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .lightbox-logo:hover img {
+            transform: scale(1.1);
+        }
+        
+        .lightbox-text h2 {
+            color: #2E7D32;
+            font-size: 32px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .lightbox-text p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+            line-height: 1.6;
+            padding: 0 20px;
+        }
+        
+        .close-lightbox {
+            background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 100%);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 30px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+            font-size: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .close-lightbox::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .close-lightbox:hover::before {
+            left: 100%;
+        }
+        
+        .close-lightbox:hover {
+            background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.4);
+        }
+        
+        .close-lightbox:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+        
+        /* Logo Hover Effect */
+        .logo {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-icon {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            background: rgba(46, 125, 50, 0.1);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+        
+        .logo:hover .logo-icon::after {
+            opacity: 1;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            background: rgba(46, 125, 50, 0.2);
+        }
+        
+        .logo-icon img {
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover .logo-icon img {
+            transform: scale(1.1);
+        }
+        
+        /* Pulsating Effect on Hover */
+        @keyframes pulseGlow {
+            0% {
+                box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(46, 125, 50, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(46, 125, 50, 0);
+            }
+        }
+        
+        .logo:hover .logo-icon {
+            animation: pulseGlow 1.5s infinite;
+        }
+        
+        /* Info Text on Hover */
+        .logo::before {
+            content: 'Klik untuk melihat detail';
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: #2E7D32;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent #2E7D32 transparent;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover::before {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        .logo:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Lightbox close button (X) styling */
+        .lightbox-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 28px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .lightbox-close-btn:hover {
+            background: rgba(46, 125, 50, 0.1);
+            color: #2E7D32;
+            transform: rotate(90deg);
+        }
+        
+        /* Lightbox additional info */
+        .lightbox-details {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .detail-item i {
+            color: #2E7D32;
+        }
+        
+        /* Logo loading animation */
+        @keyframes logoSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .logo-lightbox.loading .lightbox-logo {
+            animation: logoSpin 1s linear infinite;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .lightbox-content {
+                padding: 30px;
+                width: 95%;
+            }
+            
+            .lightbox-logo {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .lightbox-text h2 {
+                font-size: 24px;
+            }
+            
+            .logo::before {
+                display: none; /* Hide tooltip on mobile */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Logo Lightbox - IMPROVED -->
+    <div class="logo-lightbox" id="logoLightbox">
+        <button class="lightbox-close-btn" id="closeLightboxBtn">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="lightbox-content">
+            <div class="lightbox-logo">
+                <img src="osis.jpg" alt="Logo OSIS">
+            </div>
+            <div class="lightbox-text">
+                <h2>OSIS SMK TRITECH INFORMATIKA</h2>
+                
+                <div class="lightbox-details">
+                    <div class="detail-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Periode: 2025/2026</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-users"></i>
+                        <span>Pengurus: 48 Anggota</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-trophy"></i>
+                        <span>Moto: Merangkul Untuk Beraksi </span>
+                    </div>
+                </div>
+                
+                <button class="close-lightbox" id="closeLightbox">
+                    <i class="fas fa-check"></i> TUTUP
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="logo" id="logoClick" style="cursor: pointer;" title="Klik untuk melihat detail logo">
+                <!-- Logo OSIS dengan foto -->
+                <div class="logo-icon">
+                    <img src="osis.jpg" alt="Logo OSIS">
+                </div>
+                <div class="logo-text">
+                    <h1>OSIS</h1>
+                    <p>SMK TRITECH INFORMATIKA</p>
+                </div>
+            </div>
+            
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="navbar" id="navbar">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> HOME</a></li>
+                    <li><a href="pengurus.html"><i class="fas fa-user-friends"></i> PENGURUS OSIS</a></li>
+                    <li><a href="progja.html"><i class="fas fa-tasks"></i> PROGRAM KERJA</a></li>
+                    <li><a href="events.html"><i class="fas fa-calendar-alt"></i> EVENTS</a></li>
+                    <li><a href="galeri.html"><i class="fas fa-images"></i> GALERI & BERITA</a></li>
+                    <li><a href="pendaftaran.html" class="btn-daftar"><i class="fas fa-user-plus"></i> PENDAFTARAN</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h2>OSIS SMK TRITECH INFORMATIKA</h2>
+                    <h1 class="highlight">2025/2026</h1>
+                    <p>Membentuk generasi muda yang berkualitas melalui berbagai kegiatan positif dan pengembangan karakter.</p>
+                    <div class="hero-buttons">
+                        <a href="pendaftaran.html" class="btn-primary">PENDAFTARAN OSIS <i class="fas fa-arrow-right"></i></a>
+                        <a href="pengurus.html" class="btn-secondary">LIHAT PENGURUS <i class="fas fa-users"></i></a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <!-- FOTO OSIS menggantikan icon -->
+                    <div class="image-placeholder">
+                        <img src="osis.jpg" alt="OSIS SMK Tritech Informatika">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VISI, MISI & PROGRAM KERJA - IMPROVED DESIGN -->
+    <section class="visi-misi">
+        <div class="container">
+            <div class="section-header">
+                <h2>Visi & Misi OSIS</h2>
+                <div class="underline"></div>
+                <p>Tujuan dan komitmen organisasi kami</p>
+            </div>
+            
+            <div class="visi-misi-content">
+                <!-- CARD VISI -->
+                <div class="visi-card">
+                    <div class="card-icon visi-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Visi</h3>
+                    <p>"Mewujudkan OSIS SMK Tritech Informatika Medan yang unggul, aktif, dan Inspiratif dalam akademik serta non-akademik. mendukung minat dan bakat siswa, serta mencetak generasi berprestasi dan berkarakter."</p>
+                </div>
+                
+                <!-- CARD MISI -->
+                <div class="misi-card">
+                    <div class="card-icon misi-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Misi</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> 1. Meningkatkan prestasi akademik & non-akademik dengan lingkungan belajar inovatif dan suportif</li>
+                        <li><i class="fas fa-check-circle"></i> 2. Mewujudkan budaya sekolah yang berkarakter, ramah dan harmonis.</li>
+                        <li><i class="fas fa-check-circle"></i> 3. Mengembangkan kepemimpinan dan keterampilan sosial siswa.</li>
+                        <li><i class="fas fa-check-circle"></i> 4. Mencegah perundungan (bullying) dan membangun budaya saling menghargai. antar sesama guru dan siswa</li>
+                    </ul>
+                </div>
+
+                <!-- CARD PROGRAM KERJA -->
+                <div class="proker-card">
+                    <div class="card-icon proker-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h3>Program Kerja</h3>
+                    <ul>
+                        <li><i class="fas fa-star"></i> 1. TRITECH FEST Lomba seni & bakti sosial merayakan hari besar nasional.</li>
+                        <li><i class="fas fa-star"></i> 2. GEN-Z GOT TALENT Ajang unjuk bakat di akhir tahun.</li>
+                        <li><i class="fas fa-star"></i> 3. FOODPRENEUR DAY Bazaar makanan kreatif per kelas.</li>
+                        <li><i class="fas fa-star"></i> 4. CLASSMEETING Kompetisi olahraga & e-sports.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pengurus-highlight">
+        <div class="container">
+            <div class="section-header">
+                <h2>Pengurus Inti OSIS</h2>
+                <div class="underline"></div>
+                <p>Struktur kepengurusan OSIS periode 2025/2026</p>
+            </div>
+            
+            <div class="pengurus-cards">
+                <div class="pengurus-card">
+                    <div class="photo-placeholder">
+                        <!-- Ganti dengan foto pengurus -->
+                        <img src="syarifa.jpg" alt="Syarifa Nazla">
+                    </div>
+                    <h3>Syarifa Nazla</h3>
+                    <p class="role">KETUA OSIS</p>
+                    <p class="quote">"Organisasi adalah wadah untuk mengembangkan potensi diri."</p>
+                </div>
+                
+                <div class="pengurus-card">
+                    <div class="photo-placeholder">
+                        <img src="raihan.jpg" alt="Raihan Al-Raffi">
+                    </div>
+                    <h3>Raihan Al-Raffi</h3>
+                    <p class="role">WAKIL KETUA</p>
+                    <p class="quote">"Bersama kita bisa mencapai tujuan yang lebih besar."</p>
+                </div>
+                
+                <div class="pengurus-card">
+                    <div class="photo-placeholder">
+                        <img src="nazwa.jpg" alt="Nazwa Jaisia Hati">
+                    </div>
+                    <h3>Nazwa Jaisia Hati</h3>
+                    <p class="role">SEKRETARIS</p>
+                    <p class="quote">"Ketelitian dan konsistensi adalah kunci keberhasilan."</p>
+                </div>
+                
+                <div class="pengurus-card">
+                    <div class="photo-placeholder">
+                        <img src="sakila.jpg" alt="Sakila Cabaya Putri">
+                    </div>
+                    <h3>Sakila Cahaya Putri</h3>
+                    <p class="role">BENDAHARA</p>
+                    <p class="quote">"Pengelolaan yang baik mendukung terlaksananya program."</p>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <a href="pengurus.html" class="btn-primary">LIHAT SEMUA PENGURUS <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+   <footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <!-- Footer logo dengan foto -->
+                    <div class="logo-icon">
+                        <img src="osis.jpg" alt="Logo OSIS">
+                    </div>
+                    <div class="logo-text">
+                        <h3>OSIS</h3>
+                        <p>SMK TRITECH INFORMATIKA</p>
+                    </div>
+                </div>
+                <p class="footer-description">Membentuk generasi muda yang berkualitas melalui berbagai kegiatan positif dan pengembangan karakter.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Kontak Kami</h4>
+                <ul class="contact-info">
+                    <li><i class="fas fa-map-marker-alt"></i>  Jl. Bhayangkara No. 484, Indra Kasih, Kec. Medan Tembung, Kota Medan, Sumatera Utara 20221.</li>
+                    <li><i class="fas fa-phone"></i> (021) 1234-5678</li>
+                    <li><i class="fas fa-envelope"></i> osis@smktritech.sch.id</li>
+                    <li><i class="fas fa-clock"></i> Senin - Jumat, 08:00 - 15:00 WIB</li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Newsletter</h4>
+                <p>Dapatkan informasi terbaru tentang kegiatan OSIS</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Email Anda" required>
+                    <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 OSIS SMK TRITECH INFORMATIKA. All Rights Reserved.</p>
+            <p>Designed with <i class="fas fa-heart"></i> by OSIS Web Team</p>
+        </div>
+    </div>
+</footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

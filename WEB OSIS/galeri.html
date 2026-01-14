@@ -1,0 +1,2539 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeri & Berita - OSIS SMK TRITECH INFORMATIKA</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Logo Lightbox Styles - IMPROVED */
+        .logo-lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .logo-lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .lightbox-content {
+            background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
+            border-radius: 25px;
+            padding: 50px;
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            animation: slideUp 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 25px 80px rgba(46, 125, 50, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #2E7D32;
+        }
+        
+        .lightbox-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #2E7D32, #4CAF50, #2E7D32);
+        }
+        
+        @keyframes slideUp {
+            0% {
+                transform: translateY(100px) scale(0.8);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .lightbox-logo {
+            width: 250px;
+            height: 250px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 8px solid #2E7D32;
+            box-shadow: 0 15px 40px rgba(46, 125, 50, 0.4);
+            position: relative;
+            animation: logoGlow 3s infinite alternate;
+            transition: all 0.5s ease;
+        }
+        
+        .lightbox-logo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(46, 125, 50, 0.6);
+        }
+        
+        @keyframes logoGlow {
+            0% {
+                box-shadow: 0 15px 40px rgba(46, 125, 50, 0.4);
+            }
+            100% {
+                box-shadow: 0 15px 40px rgba(46, 125, 50, 0.7), 0 0 30px rgba(46, 125, 50, 0.3);
+            }
+        }
+        
+        .lightbox-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .lightbox-logo:hover img {
+            transform: scale(1.1);
+        }
+        
+        .lightbox-text h2 {
+            color: #2E7D32;
+            font-size: 32px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .lightbox-text p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+            line-height: 1.6;
+            padding: 0 20px;
+        }
+        
+        .close-lightbox {
+            background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 100%);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 30px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+            font-size: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .close-lightbox::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .close-lightbox:hover::before {
+            left: 100%;
+        }
+        
+        .close-lightbox:hover {
+            background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.4);
+        }
+        
+        .close-lightbox:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+        
+        /* Logo Hover Effect */
+        .logo {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-icon {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            background: rgba(46, 125, 50, 0.1);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+        
+        .logo:hover .logo-icon::after {
+            opacity: 1;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            background: rgba(46, 125, 50, 0.2);
+        }
+        
+        .logo-icon img {
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover .logo-icon img {
+            transform: scale(1.1);
+        }
+        
+        /* Pulsating Effect on Hover */
+        @keyframes pulseGlow {
+            0% {
+                box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(46, 125, 50, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(46, 125, 50, 0);
+            }
+        }
+        
+        .logo:hover .logo-icon {
+            animation: pulseGlow 1.5s infinite;
+        }
+        
+        /* Info Text on Hover */
+        .logo::before {
+            content: 'Klik untuk melihat detail';
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: #2E7D32;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent #2E7D32 transparent;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover::before {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        .logo:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Lightbox close button (X) styling */
+        .lightbox-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 28px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .lightbox-close-btn:hover {
+            background: rgba(46, 125, 50, 0.1);
+            color: #2E7D32;
+            transform: rotate(90deg);
+        }
+        
+        /* Lightbox additional info */
+        .lightbox-details {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .detail-item i {
+            color: #2E7D32;
+        }
+        
+        /* Logo loading animation */
+        @keyframes logoSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .logo-lightbox.loading .lightbox-logo {
+            animation: logoSpin 1s linear infinite;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .lightbox-content {
+                padding: 30px;
+                width: 95%;
+            }
+            
+            .lightbox-logo {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .lightbox-text h2 {
+                font-size: 24px;
+            }
+            
+            .logo::before {
+                display: none; /* Hide tooltip on mobile */
+            }
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 100px 0 60px;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .page-header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        /* Image Lightbox */
+        .image-lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10001;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .image-lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .image-lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+            animation: imageLightboxIn 0.3s ease;
+        }
+        
+        @keyframes imageLightboxIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .image-lightbox-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .image-lightbox-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 32px;
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .image-lightbox-close:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+        
+        /* Galeri Modal */
+        .galeri-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .galeri-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .galeri-modal-content {
+            background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideUp 0.4s ease;
+        }
+        
+        @keyframes modalSlideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .galeri-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #2E7D32;
+        }
+        
+        .galeri-modal-header h3 {
+            font-size: 28px;
+            color: #2E7D32;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .galeri-modal-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #666;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .galeri-modal-close:hover {
+            background-color: rgba(46, 125, 50, 0.1);
+            color: #2E7D32;
+            transform: rotate(90deg);
+        }
+        
+        .galeri-modal-description {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            border-left: 4px solid #2E7D32;
+        }
+        
+        .galeri-images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .galeri-image-item {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 250px;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .galeri-image-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .galeri-image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .galeri-image-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .galeri-image-item i {
+            font-size: 60px;
+            color: #2E7D32;
+            opacity: 0.3;
+        }
+        
+        .galeri-modal-footer {
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+        
+        /* Original Galeri Styles */
+        .galeri-section {
+            padding: 80px 0;
+        }
+        
+        .galeri-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 50px;
+        }
+        
+        .galeri-filter .filter-btn {
+            padding: 10px 25px;
+            background-color: var(--light-gray);
+            border: none;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .galeri-filter .filter-btn:hover, .galeri-filter .filter-btn.active {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        .galeri-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+        
+        .galeri-item {
+            background-color: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .galeri-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .galeri-img {
+            height: 250px;
+            background-color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            color: var(--white);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .galeri-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .galeri-img i {
+            position: absolute;
+        }
+        
+        .galeri-info {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        
+        .galeri-info h3 {
+            font-size: 22px;
+            color: var(--primary);
+            margin-bottom: 10px;
+            flex-grow: 1;
+        }
+        
+        .galeri-date {
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .galeri-info p {
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        .btn-galery {
+            display: inline-block;
+            padding: 10px 25px;
+            background-color: var(--primary);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            margin-top: auto;
+        }
+        
+        .btn-galery:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+        }
+        
+        .berita-section {
+            padding: 80px 0;
+            background-color: var(--light-gray);
+        }
+        
+        .berita-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .berita-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .berita-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .berita-img {
+            height: 200px;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 70px;
+            color: var(--white);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .berita-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .berita-img i {
+            position: absolute;
+        }
+        
+        .berita-content {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        
+        .berita-category {
+            display: inline-block;
+            padding: 5px 15px;
+            background-color: rgba(255, 152, 0, 0.1);
+            color: var(--secondary);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .berita-content h3 {
+            font-size: 20px;
+            color: var(--primary);
+            margin-bottom: 10px;
+            line-height: 1.4;
+            cursor: pointer;
+            flex-grow: 1;
+        }
+        
+        .berita-date {
+            color: var(--gray);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        
+        .berita-content p {
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        .btn-berita {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            margin-top: auto;
+        }
+        
+        .btn-berita:hover {
+            gap: 12px;
+            color: var(--primary-dark);
+        }
+        
+        .video-section {
+            padding-top: 40px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .video-section h3 {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .video-section h3 i {
+            color: var(--secondary);
+        }
+        
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .video-item {
+            background-color: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .video-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .video-thumbnail {
+            height: 180px;
+            background-color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .video-thumbnail i {
+            z-index: 2;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .video-thumbnail::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        
+        .video-info {
+            padding: 20px;
+        }
+        
+        .video-info h4 {
+            font-size: 18px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .video-info p {
+            color: var(--gray);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 20px;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 15px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        
+        .close-modal:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .modal-body {
+            padding: 30px;
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            margin-bottom: 20px;
+            background-color: #000;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .modal-body ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .modal-body ul li {
+            margin-bottom: 8px;
+        }
+        
+        @media (max-width: 992px) {
+            .galeri-grid, .berita-grid, .video-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .galeri-images-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .galeri-grid, .berita-grid, .video-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .galeri-filter {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+            
+            .galeri-filter .filter-btn {
+                flex-shrink: 0;
+            }
+            
+            .galeri-images-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .galeri-modal-content {
+                padding: 30px 20px;
+            }
+            
+            .galeri-modal-header h3 {
+                font-size: 24px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .page-header h1 {
+                font-size: 36px;
+            }
+            
+            .galeri-images-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo Lightbox - IMPROVED -->
+    <div class="logo-lightbox" id="logoLightbox">
+        <button class="lightbox-close-btn" id="closeLightboxBtn">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="lightbox-content">
+            <div class="lightbox-logo">
+                <img src="osis.jpg" alt="Logo OSIS">
+            </div>
+            <div class="lightbox-text">
+                <h2>OSIS SMK TRITECH INFORMATIKA</h2>
+                
+                <div class="lightbox-details">
+                    <div class="detail-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Periode: 2025/2026</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-users"></i>
+                        <span>Pengurus: 48 Anggota</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-trophy"></i>
+                        <span>Moto: Merangkul Untuk Beraksi</span>
+                    </div>
+                </div>
+                
+                <button class="close-lightbox" id="closeLightbox">
+                    <i class="fas fa-check"></i> Oke, Saya Mengerti
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Lightbox -->
+    <div class="image-lightbox" id="imageLightbox">
+        <button class="image-lightbox-close" id="closeImageLightbox">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="image-lightbox-content">
+            <img id="lightboxImage" src="" alt="Preview Image">
+        </div>
+    </div>
+
+    <!-- Galeri Modal -->
+    <div class="galeri-modal" id="galeriModal">
+        <div class="galeri-modal-content">
+            <div class="galeri-modal-header">
+                <h3 id="modalGaleriTitle"><i class="fas fa-images"></i> <span>Judul Galeri</span></h3>
+                <button class="galeri-modal-close" id="closeGaleriModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="galeri-modal-description" id="modalGaleriDescription">
+                <!-- Deskripsi galeri akan diisi oleh JavaScript -->
+            </div>
+            <div class="galeri-images-grid" id="modalGaleriImages">
+                <!-- Gambar-gambar akan diisi oleh JavaScript -->
+            </div>
+            <div class="galeri-modal-footer">
+                <p><i class="fas fa-info-circle"></i> Klik pada gambar untuk melihat dalam ukuran yang lebih besar</p>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="logo" id="logoClick" style="cursor: pointer;" title="Klik untuk melihat detail logo">
+                <!-- Logo OSIS dengan foto -->
+                <div class="logo-icon">
+                    <img src="osis.jpg" alt="Logo OSIS">
+                </div>
+                <div class="logo-text">
+                    <h1>OSIS</h1>
+                    <p>SMK TRITECH INFORMATIKA</p>
+                </div>
+            </div>
+            
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="navbar" id="navbar">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> HOME</a></li>
+                    <li><a href="pengurus.html"><i class="fas fa-user-friends"></i> PENGURUS OSIS</a></li>
+                    <li><a href="progja.html"><i class="fas fa-tasks"></i> PROGRAM KERJA</a></li>
+                    <li><a href="events.html"><i class="fas fa-calendar-alt"></i> EVENTS</a></li>
+                    <li><a href="galeri.html" class="active"><i class="fas fa-images"></i> GALERI & BERITA</a></li>
+                    <li><a href="pendaftaran.html" class="btn-daftar"><i class="fas fa-user-plus"></i> PENDAFTARAN</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+   <!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeri & Berita - OSIS SMK TRITECH INFORMATIKA</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Logo Lightbox Styles */
+        .logo-lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .logo-lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .lightbox-content {
+            background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
+            border-radius: 25px;
+            padding: 50px;
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            animation: slideUp 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 25px 80px rgba(46, 125, 50, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #2E7D32;
+        }
+        
+        .lightbox-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #2E7D32, #4CAF50, #2E7D32);
+        }
+        
+        @keyframes slideUp {
+            0% {
+                transform: translateY(100px) scale(0.8);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .lightbox-logo {
+            width: 250px;
+            height: 250px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 8px solid #2E7D32;
+            box-shadow: 0 15px 40px rgba(46, 125, 50, 0.4);
+            position: relative;
+            animation: logoGlow 3s infinite alternate;
+            transition: all 0.5s ease;
+        }
+        
+        .lightbox-logo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(46, 125, 50, 0.6);
+        }
+        
+        @keyframes logoGlow {
+            0% {
+                box-shadow: 0 15px 40px rgba(46, 125, 50, 0.4);
+            }
+            100% {
+                box-shadow: 0 15px 40px rgba(46, 125, 50, 0.7), 0 0 30px rgba(46, 125, 50, 0.3);
+            }
+        }
+        
+        .lightbox-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .lightbox-text h2 {
+            color: #2E7D32;
+            font-size: 32px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .lightbox-text p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+            line-height: 1.6;
+            padding: 0 20px;
+        }
+        
+        .close-lightbox {
+            background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 100%);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 30px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+            font-size: 16px;
+        }
+        
+        .close-lightbox:hover {
+            background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.4);
+        }
+        
+        .lightbox-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 28px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .lightbox-close-btn:hover {
+            background: rgba(46, 125, 50, 0.1);
+            color: #2E7D32;
+            transform: rotate(90deg);
+        }
+        
+        .lightbox-details {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .detail-item i {
+            color: #2E7D32;
+        }
+        
+        /* Image Lightbox */
+        .image-lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10001;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .image-lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .image-lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+            animation: imageLightboxIn 0.3s ease;
+        }
+        
+        @keyframes imageLightboxIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .image-lightbox-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .image-lightbox-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 32px;
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .image-lightbox-close:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+        
+        /* Galeri Modal - FIXED */
+        .galeri-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .galeri-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .galeri-modal-content {
+            background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideUp 0.4s ease;
+        }
+        
+        @keyframes modalSlideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .galeri-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #2E7D32;
+        }
+        
+        .galeri-modal-header h3 {
+            font-size: 28px;
+            color: #2E7D32;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .galeri-modal-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #666;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .galeri-modal-close:hover {
+            background-color: rgba(46, 125, 50, 0.1);
+            color: #2E7D32;
+            transform: rotate(90deg);
+        }
+        
+        .galeri-modal-description {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            border-left: 4px solid #2E7D32;
+        }
+        
+        .galeri-images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .galeri-image-item {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 250px;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .galeri-image-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .galeri-image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .galeri-image-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .galeri-modal-footer {
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%);
+            color: white;
+            padding: 100px 0 60px;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .page-header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        /* Galeri Section */
+        .galeri-section {
+            padding: 80px 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-header h2 {
+            font-size: 36px;
+            color: #2E7D32;
+            margin-bottom: 10px;
+        }
+        
+        .section-header p {
+            font-size: 18px;
+            color: #666;
+        }
+        
+        .galeri-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+        
+        .galeri-item {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .galeri-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .galeri-img {
+            height: 250px;
+            background-color: #4CAF50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .galeri-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .galeri-info {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        
+        .galeri-info h3 {
+            font-size: 22px;
+            color: #2E7D32;
+            margin-bottom: 10px;
+            flex-grow: 1;
+        }
+        
+        .galeri-date {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .galeri-info p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        .btn-galery {
+            display: inline-block;
+            padding: 10px 25px;
+            background-color: #2E7D32;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            margin-top: auto;
+        }
+        
+        .btn-galery:hover {
+            background-color: #1B5E20;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+        }
+        
+        .berita-section {
+            padding: 80px 0;
+            background-color: #f5f5f5;
+        }
+        
+        .berita-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .berita-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .berita-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .berita-img {
+            height: 200px;
+            background-color: #2E7D32;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .berita-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .berita-content {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        
+        .berita-category {
+            display: inline-block;
+            padding: 5px 15px;
+            background-color: rgba(255, 152, 0, 0.1);
+            color: #FF9800;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .berita-content h3 {
+            font-size: 20px;
+            color: #2E7D32;
+            margin-bottom: 10px;
+            line-height: 1.4;
+            cursor: pointer;
+            flex-grow: 1;
+        }
+        
+        .berita-date {
+            color: #666;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        
+        .berita-content p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        .btn-berita {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #2E7D32;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            margin-top: auto;
+        }
+        
+        .btn-berita:hover {
+            gap: 12px;
+            color: #1B5E20;
+        }
+        
+        .video-section {
+            padding-top: 40px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .video-section h3 {
+            font-size: 24px;
+            color: #2E7D32;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .video-item {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .video-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .video-thumbnail {
+            height: 180px;
+            background-color: #1B5E20;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .video-thumbnail i {
+            z-index: 2;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .video-thumbnail::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        
+        .video-info {
+            padding: 20px;
+        }
+        
+        .video-info h4 {
+            font-size: 18px;
+            color: #2E7D32;
+            margin-bottom: 10px;
+        }
+        
+        .video-info p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 20px;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 15px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%);
+            color: white;
+            padding: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .modal-body {
+            padding: 30px;
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            margin-bottom: 20px;
+            background-color: #000;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        @media (max-width: 992px) {
+            .galeri-grid, .berita-grid, .video-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .galeri-images-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .galeri-grid, .berita-grid, .video-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .galeri-images-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .galeri-modal-content {
+                padding: 30px 20px;
+            }
+            
+            .lightbox-content {
+                padding: 30px;
+                width: 95%;
+            }
+            
+            .lightbox-logo {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .lightbox-text h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo Lightbox -->
+    <div class="logo-lightbox" id="logoLightbox">
+        <button class="lightbox-close-btn" id="closeLightboxBtn">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="lightbox-content">
+            <div class="lightbox-logo">
+                <img src="osis.jpg" alt="Logo OSIS">
+            </div>
+            <div class="lightbox-text">
+                <h2>OSIS SMK TRITECH INFORMATIKA</h2>
+                <p>Logo resmi Organisasi Siswa Intra Sekolah SMK Tritech Informatika periode 2025/2026 yang melambangkan persatuan, kreativitas, dan semangat belajar siswa.</p>
+                
+                <div class="lightbox-details">
+                    <div class="detail-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Periode: 2025/2026</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-users"></i>
+                        <span>Pengurus: 40 Anggota</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-trophy"></i>
+                        <span>Moto: Maju Bersama, Berkarya untuk Sekolah</span>
+                    </div>
+                </div>
+                
+                <button class="close-lightbox" id="closeLightbox">
+                    <i class="fas fa-check"></i> Oke, Saya Mengerti
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Lightbox -->
+    <div class="image-lightbox" id="imageLightbox">
+        <button class="image-lightbox-close" id="closeImageLightbox">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="image-lightbox-content">
+            <img id="lightboxImage" src="" alt="Preview Image">
+        </div>
+    </div>
+
+    <!-- Galeri Modal -->
+    <div class="galeri-modal" id="galeriModal">
+        <div class="galeri-modal-content">
+            <div class="galeri-modal-header">
+                <h3 id="modalGaleriTitle"><i class="fas fa-images"></i> <span>Judul Galeri</span></h3>
+                <button class="galeri-modal-close" id="closeGaleriModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="galeri-modal-description" id="modalGaleriDescription">
+                <!-- Deskripsi galeri akan diisi oleh JavaScript -->
+            </div>
+            <div class="galeri-images-grid" id="modalGaleriImages">
+                <!-- Gambar-gambar akan diisi oleh JavaScript -->
+            </div>
+            <div class="galeri-modal-footer">
+                <p><i class="fas fa-info-circle"></i> Klik pada gambar untuk melihat dalam ukuran yang lebih besar</p>
+            </div>
+        </div>
+    </div>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Galeri & Berita</h1>
+            <p>Kumpulan foto, video, dan berita kegiatan OSIS SMK TRITECH INFORMATIKA</p>
+        </div>
+    </section>
+
+    <section class="galeri-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Galeri Kegiatan</h2>
+                <p>Dokumentasi berbagai kegiatan yang telah dilaksanakan</p>
+            </div>
+            
+            <div class="galeri-grid">
+                <!-- Galeri 1: Pelantikan OSIS -->
+                <div class="galeri-item" data-category="pelantikan">
+                    <div class="galeri-img">
+                        <img src="pelantikan.jpeg" alt="Pelantikan OSIS">
+                    </div>
+                    <div class="galeri-info">
+                        <h3>Pelantikan Pengurus OSIS 2025/2026</h3>
+                        <p class="galeri-date">17 februari 2025</p>
+                        <p>Upacara pelantikan pengurus OSIS periode baru dihadiri oleh seluruh siswa dan staf pengajar. Acara berlangsung khidmat di Aula Utama sekolah.</p>
+                        <button class="btn-galery" onclick="openGaleriModal('pelantikan')">Lihat Album</button>
+                    </div>
+                </div>
+                
+                <!-- Galeri 2: Bakti Sosial -->
+                <div class="galeri-item" data-category="sosial">
+                    <div class="galeri-img">
+                        <img src="bazar.jpeg" alt="Bakti Sosial">
+                    </div>
+                    <div class="galeri-info">
+                        <h3>Event Bazar Tritech </h3>
+                        <p class="galeri-date">11 desember 2025</p>
+                        <p>Kegiatan Bazar an Lomba Expo Project di sekolah SMK Tritech Informatika Medan.</p>
+                        <button class="btn-galery" onclick="openGaleriModal('sosial')">Lihat Album</button>
+                    </div>
+                </div>
+                
+                <!-- Galeri 3: Upacara Bendera -->
+                <div class="galeri-item" data-category="rutin">
+                    <div class="galeri-img">
+                        <img src="upacara.jpeg" alt="Upacara Bendera">
+                    </div>
+                    <div class="galeri-info">
+                        <h3>Upacara Bendera Hari Senin</h3>
+                        <p class="galeri-date">15 November 2025</p>
+                        <p>Pelaksanaan upacara bendera rutin setiap hari Senin yang diikuti oleh seluruh warga sekolah. Upacara dipimpin langsung oleh Ketua OSIS.</p>
+                        <button class="btn-galery" onclick="openGaleriModal('rutin')">Lihat Album</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="berita-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Berita Terkini</h2>
+                <p>Informasi dan update terbaru seputar kegiatan OSIS</p>
+            </div>
+            
+            <div class="berita-grid">
+                <!-- Berita 1: Open Recruitment -->
+                <div class="berita-card">
+                    <div class="berita-img">
+                        <img src="futsal.jpeg" alt="Open Recruitment">
+                    </div>
+                    <div class="berita-content">
+                        <span class="berita-category">Pengumuman</span>
+                        <h3 onclick="openNewsModal('recruitment')">kegiatan classmet akhir tahun 2025</h3>
+                        <p class="berita-date"><i class="far fa-calendar"></i>11 Desember 2025</p>
+                        <button class="btn-berita" onclick="openNewsModal('recruitment')">Baca Selengkapnya <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+                
+                <!-- Berita 2: Prestasi Lomba Coding -->
+                <div class="berita-card">
+                    <div class="berita-img">
+                        <img src="seminar.jpeg" alt="Juara Lomba Coding">
+                    </div>
+                    <div class="berita-content">
+                        <span class="berita-category">Seminar</span>
+                        <h3 onclick="openNewsModal('prestasi')">Osis TC menerima undangan seminar di UMSU</h3>
+                        <p class="berita-date"><i class="far fa-calendar"></i> 9 januari 2026</p>
+                        <button class="btn-berita" onclick="openNewsModal('prestasi')">Baca Selengkapnya <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+                
+                <!-- Berita 3: Workshop Kreativitas -->
+                <div class="berita-card">
+                    <div class="berita-img">
+                        <img src="baramasod.jpeg" alt="Workshop Kreativitas">
+                    </div>
+                    <div class="berita-content">
+                        <span class="berita-category">Roadshow</span>
+                        <h3 onclick="openNewsModal('workshop')">FREEDOM WITH QURAN</h3>
+                        <p class="berita-date"><i class="far fa-calendar"></i> 02 oktober 2024</p>
+                        <button class="btn-berita" onclick="openNewsModal('workshop')">Baca Selengkapnya <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="video-section">
+                <h3><i class="fas fa-video"></i> Video Dokumentasi</h3>
+                <div class="video-grid">
+                    <div class="video-item" onclick="openVideoModal('https://www.youtube.com/embed/qg8xci3ibIc')">
+                        <div class="video-thumbnail">
+                            <img src="https://img.youtube.com/vi/qg8xci3ibIc/maxresdefault.jpg" alt="Video 1">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="video-info">
+                            <h4>Highlight Pelantikan OSIS 2025/2026</h4>
+                            <p>Video singkat dokumentasi upacara pelantikan pengurus OSIS periode baru dengan suasana khidmat.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="video-item" onclick="openVideoModal('https://www.youtube.com/embed/wnH5uTYFb_8')">
+                        <div class="video-thumbnail">
+                            <img src="https://img.youtube.com/vi/wnH5uTYFb_8/maxresdefault.jpg" alt="Video 2">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="video-info">
+                            <h4>Liputan Bakti Sosial ke Panti Asuhan</h4>
+                            <p>Dokumentasi lengkap kegiatan bakti sosial yang dilakukan oleh OSIS dengan penuh kehangatan.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="video-item" onclick="openVideoModal('https://www.youtube.com/embed/Hrc1yyQA178')">
+                        <div class="video-thumbnail">
+                            <img src="https://img.youtube.com/vi/Hrc1yyQA178/maxresdefault.jpg" alt="Video 3">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="video-info">
+                            <h4>Kegiatan OSIS SMK Tritech Informatika</h4>
+                            <p>Dokumentasi berbagai kegiatan dan prestasi OSIS SMK Tritech Informatika dalam satu tahun terakhir.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Data Galeri
+        const galeriData = {
+            'pelantikan': {
+                title: 'Pelantikan Pengurus OSIS 2025/2026',
+                description: 'Upacara pelantikan pengurus OSIS periode baru yang dilaksanakan pada tanggal 10 Desember 2025 di Aula Utama SMK Tritech Informatika. Acara ini dihadiri oleh seluruh siswa, guru, dan staf sekolah. Pengurus OSIS yang dilantik terdiri dari 40 anggota yang telah melalui proses seleksi ketat. Acara dimeriahkan dengan penampilan paduan suara dan tarian tradisional dari siswa.',
+                images: [
+                    'pelantikan1.jpeg',
+                    'pelantikan2.jpeg',
+                    'pelantikan3.jpeg',
+                    'pelantikan4.jpeg',
+                    'pelantikan5.jpeg'
+                ]
+            },
+            'sosial': {
+                title: 'Bazar Expo Projek Kreatif tritech 2025',
+                description: 'Yuk datang ke bazzar expo project kreatif SMK Tritech 2025!! TERBUKA UNTUK UMUM!!',
+                images: [
+                    'bazar1.jpeg',
+                    'bazar2.jpeg',
+                    'bazar3.jpeg',
+                    'bazar4.jpeg',
+                    'bazar5.jpeg'
+                ]
+            },
+            'rutin': {
+                title: 'Upacara Bendera Hari Senin',
+                description: 'Pelaksanaan upacara bendera rutin setiap hari Senin yang diikuti oleh seluruh warga sekolah. Upacara ini dipimpin langsung oleh Rizki Yusran dewantara sebagai pembina upacara. Upacara dilaksanakan dengan khidmat dan penuh semangat nasionalisme. Setiap minggu, terdapat sesi motivasi dari pembina OSIS untuk membangun karakter siswa.',
+                images: [
+                    'kebangkitan1.jpeg',
+                    'kebangkitan2.jpeg',
+                    'kebangkitan3.jpeg',
+                    'kebangkitan4.jpeg',
+                    'kebangkitan5.jpeg'
+                ]
+            }
+        };
+
+        // Data Berita
+        const beritaData = {
+            'recruitment': {
+                title: 'Classmeet Tritech',
+                content: `
+                    <p><strong>Tanggal:</strong> 11 desember 2025</p>
+                    <p>perlombaan classmet futsal</p>
+                    
+                `
+            },
+            'prestasi': {
+                title: 'Seminar Umsu',
+                content: `
+                    <p><strong>Tanggal:</strong> 09 januari </p>
+                    <p>Anggota osis Menghadirkan Seminar Health Explorace UMSU</p>
+                `
+            },
+            'workshop': {
+                title: 'ROADSHOW FREEOM WITH QURAN',
+                content: `
+                    <p><strong>Tanggal:</strong> 02 oktober 2024</p>
+                    <p>Mari satukan hati dan langkah untuk Palestina!</p>
+                    <p>Acara Roadshow Freedom with Qur'an hadir untuk memperkuat solidaritas kita melalui pesan-pesan penuh makna dari Al-Qur'an.</p>
+                    <p>Bersama, kita bisa menjadi bagian dari perjuangan kemanusiaan demi kebebasan Palestina. Yuk, bergabung dan saling mendukung!</p>
+                `
+            }
+        };
+
+        // Function to open image in lightbox
+        function openImageLightbox(imgSrc) {
+            document.getElementById('lightboxImage').src = imgSrc;
+            document.getElementById('imageLightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Function to open galeri modal - FIXED
+        function openGaleriModal(category) {
+            const data = galeriData[category];
+            if (!data) return;
+            
+            document.getElementById('modalGaleriTitle').innerHTML = `<i class="fas fa-images"></i> <span>${data.title}</span>`;
+            document.getElementById('modalGaleriDescription').textContent = data.description;
+            
+            // Create image elements
+            const imagesContainer = document.getElementById('modalGaleriImages');
+            imagesContainer.innerHTML = '';
+            
+            data.images.forEach(imgSrc => {
+                const imageItem = document.createElement('div');
+                imageItem.className = 'galeri-image-item';
+                imageItem.innerHTML = `<img src="${imgSrc}" alt="${data.title}" onclick="openImageLightbox('${imgSrc}')">`;
+                imagesContainer.appendChild(imageItem);
+            });
+            
+            // Show modal
+            document.getElementById('galeriModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Function to open news modal
+        function openNewsModal(newsId) {
+            const data = beritaData[newsId];
+            if (!data) return;
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>${data.title}</h2>
+                        <button class="close-modal" onclick="closeCurrentModal(event)"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        ${data.content}
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            document.body.style.overflow = 'hidden';
+            
+            setTimeout(() => {
+                modal.classList.add('active');
+            }, 10);
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeCurrentModal(e);
+                }
+            });
+        }
+
+        // Function to open video modal
+        function openVideoModal(videoUrl) {
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Video Dokumentasi</h2>
+                        <button class="close-modal" onclick="closeCurrentModal(event)"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="video-container">
+                            <iframe src="${videoUrl}?autoplay=1" title="Video Dokumentasi OSIS" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                        <p><em>Video dokumentasi kegiatan OSIS SMK Tritech Informatika</em></p>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            document.body.style.overflow = 'hidden';
+            
+            setTimeout(() => {
+                modal.classList.add('active');
+            }, 10);
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeCurrentModal(e);
+                }
+            });
+        }
+
+        // Function to close current modal
+        function closeCurrentModal(event) {
+            event.stopPropagation();
+            const modal = document.querySelector('.modal-overlay.active');
+            if (modal) {
+                modal.classList.remove('active');
+                setTimeout(() => {
+                    document.body.removeChild(modal);
+                    document.body.style.overflow = 'auto';
+                }, 300);
+            }
+        }
+
+        // Initialize all event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Logo lightbox events
+            const logoClick = document.getElementById('logoClick');
+            const logoLightbox = document.getElementById('logoLightbox');
+            const closeLightboxBtn = document.getElementById('closeLightboxBtn');
+            const closeLightbox = document.getElementById('closeLightbox');
+            
+            if (logoClick) {
+                logoClick.addEventListener('click', function() {
+                    logoLightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+            
+            if (closeLightboxBtn) {
+                closeLightboxBtn.addEventListener('click', function() {
+                    logoLightbox.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            }
+            
+            if (closeLightbox) {
+                closeLightbox.addEventListener('click', function() {
+                    logoLightbox.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            }
+            
+            if (logoLightbox) {
+                logoLightbox.addEventListener('click', function(e) {
+                    if (e.target === logoLightbox) {
+                        logoLightbox.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+            
+            // Close image lightbox
+            document.getElementById('closeImageLightbox').addEventListener('click', function() {
+                document.getElementById('imageLightbox').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Close image lightbox when clicking outside
+            document.getElementById('imageLightbox').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // Close galeri modal - FIXED
+            document.getElementById('closeGaleriModal').addEventListener('click', function() {
+                document.getElementById('galeriModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Close galeri modal when clicking outside - FIXED
+            document.getElementById('galeriModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // Close with ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    // Close logo lightbox
+                    if (logoLightbox && logoLightbox.classList.contains('active')) {
+                        logoLightbox.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                    // Close galeri modal
+                    const galeriModal = document.getElementById('galeriModal');
+                    if (galeriModal && galeriModal.classList.contains('active')) {
+                        galeriModal.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                    // Close image lightbox
+                    const imageLightbox = document.getElementById('imageLightbox');
+                    if (imageLightbox && imageLightbox.classList.contains('active')) {
+                        imageLightbox.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                    // Close other modals
+                    const activeModal = document.querySelector('.modal-overlay.active');
+                    if (activeModal) {
+                        activeModal.classList.remove('active');
+                        setTimeout(() => {
+                            if (document.body.contains(activeModal)) {
+                                document.body.removeChild(activeModal);
+                            }
+                            document.body.style.overflow = 'auto';
+                        }, 300);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <img src="osis.jpg" alt="Logo OSIS">
+                        </div>
+                        <div class="logo-text">
+                            <h3>OSIS</h3>
+                            <p>SMK TRITECH INFORMATIKA</p>
+                        </div>
+                    </div>
+                    <p class="footer-description">Membentuk generasi muda yang berkualitas melalui berbagai kegiatan positif dan pengembangan karakter.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Kontak Kami</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i>Jl. Bhayangkara No. 484, Indra Kasih, Kec. Medan Tembung, Kota Medan, Sumatera Utara 20221.</li>
+                        <li><i class="fas fa-phone"></i> (021) 1234-5678</li>
+                        <li><i class="fas fa-envelope"></i> osis@smktritech.sch.id</li>
+                        <li><i class="fas fa-clock"></i> Senin - Jumat, 08:00 - 15:00 WIB</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Newsletter</h4>
+                    <p>Dapatkan informasi terbaru tentang kegiatan OSIS</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Email Anda" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 OSIS SMK TRITECH INFORMATIKA. All Rights Reserved.</p>
+                <p>Designed with <i class="fas fa-heart"></i> by OSIS Web Team</p>
+            </div>
+        </div>
+    </footer>

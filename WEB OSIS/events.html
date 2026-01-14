@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - OSIS SMK TRITECH INFORMATIKA</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Logo Lightbox Styles - IMPROVED */
+        .logo-lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .logo-lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .lightbox-content {
+            background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
+            border-radius: 25px;
+            padding: 50px;
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            animation: slideUp 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 25px 80px rgba(46, 125, 50, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #2E7D32;
+        }
+        
+        .lightbox-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #2E7D32, #4CAF50, #2E7D32);
+        }
+        
+        @keyframes slideUp {
+            0% {
+                transform: translateY(100px) scale(0.8);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .lightbox-logo {
+            width: 250px;
+            height: 250px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 8px solid #2E7D32;
+            box-shadow: 0 15px 40px rgba(46, 125, 50, 0.4);
+            position: relative;
+            animation: logoGlow 3s infinite alternate;
+            transition: all 0.5s ease;
+        }
+        
+        .lightbox-logo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(46, 125, 50, 0.6);
+        }
+        
+        @keyframes logoGlow {
+            0% {
+                box-shadow: 0 15px 40px rgba(46, 125, 50, 0.4);
+            }
+            100% {
+                box-shadow: 0 15px 40px rgba(46, 125, 50, 0.7), 0 0 30px rgba(46, 125, 50, 0.3);
+            }
+        }
+        
+        .lightbox-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .lightbox-logo:hover img {
+            transform: scale(1.1);
+        }
+        
+        .lightbox-text h2 {
+            color: #2E7D32;
+            font-size: 32px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .lightbox-text p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+            line-height: 1.6;
+            padding: 0 20px;
+        }
+        
+        .close-lightbox {
+            background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 100%);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 30px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+            font-size: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .close-lightbox::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .close-lightbox:hover::before {
+            left: 100%;
+        }
+        
+        .close-lightbox:hover {
+            background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.4);
+        }
+        
+        .close-lightbox:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+        
+        /* Logo Hover Effect */
+        .logo {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-icon {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            background: rgba(46, 125, 50, 0.1);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+        
+        .logo:hover .logo-icon::after {
+            opacity: 1;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            background: rgba(46, 125, 50, 0.2);
+        }
+        
+        .logo-icon img {
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover .logo-icon img {
+            transform: scale(1.1);
+        }
+        
+        /* Pulsating Effect on Hover */
+        @keyframes pulseGlow {
+            0% {
+                box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(46, 125, 50, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(46, 125, 50, 0);
+            }
+        }
+        
+        .logo:hover .logo-icon {
+            animation: pulseGlow 1.5s infinite;
+        }
+        
+        /* Info Text on Hover */
+        .logo::before {
+            content: 'Klik untuk melihat detail';
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: #2E7D32;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent #2E7D32 transparent;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover::before {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        .logo:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Lightbox close button (X) styling */
+        .lightbox-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 28px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .lightbox-close-btn:hover {
+            background: rgba(46, 125, 50, 0.1);
+            color: #2E7D32;
+            transform: rotate(90deg);
+        }
+        
+        /* Lightbox additional info */
+        .lightbox-details {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .detail-item i {
+            color: #2E7D32;
+        }
+        
+        /* Logo loading animation */
+        @keyframes logoSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .logo-lightbox.loading .lightbox-logo {
+            animation: logoSpin 1s linear infinite;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .lightbox-content {
+                padding: 30px;
+                width: 95%;
+            }
+            
+            .lightbox-logo {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .lightbox-text h2 {
+                font-size: 24px;
+            }
+            
+            .logo::before {
+                display: none; /* Hide tooltip on mobile */
+            }
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 100px 0 60px;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .page-header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        /* Event Detail Modal */
+        .event-detail-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .event-detail-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .event-modal-content {
+            background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideUp 0.4s ease;
+        }
+        
+        @keyframes modalSlideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .event-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #2E7D32;
+        }
+        
+        .event-modal-header h3 {
+            font-size: 28px;
+            color: #2E7D32;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .event-modal-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #666;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .event-modal-close:hover {
+            background-color: rgba(46, 125, 50, 0.1);
+            color: #2E7D32;
+            transform: rotate(90deg);
+        }
+        
+        .event-modal-body {
+            margin-bottom: 30px;
+        }
+        
+        .event-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: rgba(46, 125, 50, 0.05);
+            border-radius: 12px;
+        }
+        
+        .event-info-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .event-info-item i {
+            font-size: 20px;
+            color: #2E7D32;
+            width: 30px;
+        }
+        
+        .event-info-item span {
+            font-size: 16px;
+            color: #333;
+        }
+        
+        .event-description {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            border-left: 4px solid #2E7D32;
+        }
+        
+        .event-participants {
+            margin-bottom: 25px;
+        }
+        
+        .event-participants h4 {
+            font-size: 18px;
+            color: #2E7D32;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .participants-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .participant-tag {
+            background-color: #e8f5e9;
+            color: #2E7D32;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid #c8e6c9;
+        }
+        
+        .event-requirements {
+            margin-bottom: 25px;
+        }
+        
+        .event-requirements h4 {
+            font-size: 18px;
+            color: #2E7D32;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .requirements-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .requirements-list li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 15px;
+            color: #555;
+        }
+        
+        .requirements-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #2E7D32;
+            font-weight: bold;
+        }
+        
+        .event-modal-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .event-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+        
+        .status-badge {
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .status-upcoming {
+            background-color: #fff3e0;
+            color: #ef6c00;
+        }
+        
+        .status-ongoing {
+            background-color: #e8f5e9;
+            color: #2E7D32;
+        }
+        
+        .status-completed {
+            background-color: #f5f5f5;
+            color: #757575;
+        }
+        
+        .btn-register {
+            background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-register:hover {
+            background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.4);
+        }
+        
+        /* CALENDAR STYLES */
+        .calendar-section {
+            padding: 40px 0 30px;
+            background-color: var(--light-gray);
+        }
+        
+        .calendar-container {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+        
+        .calendar-header h3 {
+            font-size: 18px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .calendar-nav button {
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            font-size: 13px;
+        }
+        
+        .calendar-nav button:hover {
+            background-color: var(--primary-dark);
+            transform: scale(1.1);
+        }
+        
+        .current-month {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--primary);
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+        }
+        
+        .calendar-day-header {
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary);
+            padding: 10px 3px;
+            font-size: 12px;
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            position: relative;
+            background-color: var(--light-gray);
+            font-size: 13px;
+        }
+        
+        .calendar-day:hover {
+            background-color: var(--primary-light);
+            color: var(--white);
+            transform: scale(1.05);
+        }
+        
+        .calendar-day.today {
+            background-color: var(--secondary);
+            color: var(--white);
+            font-weight: 700;
+        }
+        
+        .calendar-day.has-event {
+            background-color: var(--primary);
+            color: var(--white);
+            font-weight: 700;
+        }
+        
+        .calendar-day.has-event::after {
+            content: '';
+            position: absolute;
+            bottom: 3px;
+            width: 4px;
+            height: 4px;
+            background-color: var(--secondary);
+            border-radius: 50%;
+        }
+        
+        .calendar-day.other-month {
+            color: #ccc;
+            background-color: transparent;
+        }
+        
+        .calendar-day.disabled {
+            pointer-events: none;
+            opacity: 0.3;
+        }
+        
+        .calendar-legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid var(--light-gray);
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+        
+        .legend-color.today {
+            background-color: var(--secondary);
+        }
+        
+        .legend-color.event {
+            background-color: var(--primary);
+        }
+        
+        .events-calendar {
+            padding: 80px 0;
+        }
+        
+        .upcoming-events {
+            margin-bottom: 80px;
+        }
+        
+        .upcoming-events h3, .past-events h3 {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .upcoming-events h3 i, .past-events h3 i {
+            color: var(--secondary);
+        }
+        
+        .events-list {
+            background-color: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .event-item {
+            display: flex;
+            align-items: center;
+            padding: 25px;
+            border-bottom: 1px solid var(--light-gray);
+            transition: var(--transition);
+        }
+        
+        .event-item:hover {
+            background-color: rgba(46, 125, 50, 0.05);
+        }
+        
+        .event-item:last-child {
+            border-bottom: none;
+        }
+        
+        .event-date {
+            min-width: 80px;
+            text-align: center;
+            padding-right: 20px;
+            border-right: 2px solid var(--light-gray);
+        }
+        
+        .event-date .day {
+            display: block;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+        
+        .event-date .month {
+            display: block;
+            font-size: 16px;
+            color: var(--gray);
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        
+        .event-details {
+            flex: 1;
+            padding: 0 30px;
+        }
+        
+        .event-details h4 {
+            font-size: 20px;
+            color: var(--primary);
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .event-details h4:hover {
+            color: var(--primary-dark);
+        }
+        
+        .event-details p {
+            color: var(--gray);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .event-desc {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .btn-event {
+            padding: 10px 25px;
+            background-color: var(--primary);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            white-space: nowrap;
+            cursor: pointer;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .btn-event:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+        }
+        
+        .past-events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .past-event-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .past-event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .past-event-img {
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            flex-shrink: 0;
+        }
+
+        .past-event-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.5s ease;
+        }
+
+        .past-event-card:hover .past-event-img img {
+            transform: scale(1.1);
+        }
+
+        .past-event-img i {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 60px;
+            color: var(--white);
+        }
+        
+        .past-event-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        
+        .past-event-content h4 {
+            font-size: 18px;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-weight: 600;
+            line-height: 1.4;
+            cursor: pointer;
+        }
+        
+        .event-date-past {
+            color: var(--gray);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+        
+        .event-date-past i {
+            color: var(--secondary);
+        }
+        
+        .past-event-content > p {
+            color: var(--gray);
+            line-height: 1.6;
+            font-size: 13px;
+            margin-bottom: 18px;
+            flex-grow: 1;
+        }
+        
+        .past-event-content .btn-secondary {
+            align-self: flex-start;
+        }
+        
+        .btn-secondary {
+            display: inline-block;
+            padding: 10px 24px;
+            background-color: var(--primary);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 13px;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(46, 125, 50, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
+        }
+        
+        @media (max-width: 992px) {
+            .event-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            
+            .event-date {
+                border-right: none;
+                border-bottom: 2px solid var(--light-gray);
+                padding-right: 0;
+                padding-bottom: 20px;
+                width: 100%;
+            }
+            
+            .event-details {
+                padding: 0;
+            }
+            
+            .btn-event {
+                align-self: flex-end;
+            }
+            
+            .event-modal-content {
+                padding: 30px 20px;
+            }
+            
+            .event-info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .past-events-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .calendar-container {
+                padding: 20px;
+            }
+            
+            .calendar-grid {
+                gap: 5px;
+            }
+            
+            .calendar-day-header {
+                font-size: 12px;
+                padding: 10px 2px;
+            }
+            
+            .calendar-day {
+                font-size: 14px;
+            }
+            
+            .event-modal-header h3 {
+                font-size: 24px;
+            }
+            
+            .event-modal-footer {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .page-header h1 {
+                font-size: 36px;
+            }
+            
+            .calendar-nav {
+                gap: 10px;
+            }
+            
+            .current-month {
+                font-size: 16px;
+                min-width: 120px;
+            }
+            
+            .calendar-nav button {
+                width: 35px;
+                height: 35px;
+                font-size: 14px;
+            }
+            
+            .event-modal-content {
+                padding: 25px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo Lightbox - IMPROVED -->
+    <div class="logo-lightbox" id="logoLightbox">
+        <button class="lightbox-close-btn" id="closeLightboxBtn">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="lightbox-content">
+            <div class="lightbox-logo">
+                <img src="osis.jpg" alt="Logo OSIS">
+            </div>
+            <div class="lightbox-text">
+                <h2>OSIS SMK TRITECH INFORMATIKA</h2> 
+                
+                <div class="lightbox-details">
+                    <div class="detail-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Periode: 2025/2026</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-users"></i>
+                        <span>Pengurus: 48 Anggota</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-trophy"></i>
+                        <span>Moto: Merangkul Untuk Beraksi</span>
+                    </div>
+                </div>
+                
+                <button class="close-lightbox" id="closeLightbox">
+                    <i class="fas fa-check"></i> Oke, Saya Mengerti
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Detail Modal -->
+    <div class="event-detail-modal" id="eventDetailModal">
+        <div class="event-modal-content">
+            <div class="event-modal-header">
+                <h3 id="modalEventTitle"><i class="fas fa-calendar-check"></i> <span>Judul Event</span></h3>
+                <button class="event-modal-close" id="closeEventModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="event-modal-body">
+                <div class="event-info-grid" id="modalEventInfo">
+                    <!-- Info akan diisi oleh JavaScript -->
+                </div>
+                <div class="event-description" id="modalEventDescription">
+                    <!-- Deskripsi akan diisi oleh JavaScript -->
+                </div>
+                <div class="event-participants">
+                    <h4><i class="fas fa-users"></i> Peserta yang Diharapkan</h4>
+                    <div class="participants-list" id="modalParticipants">
+                        <!-- Peserta akan diisi oleh JavaScript -->
+                    </div>
+                </div>
+                <div class="event-requirements">
+                    <h4><i class="fas fa-clipboard-check"></i> Persyaratan & Informasi</h4>
+                    <ul class="requirements-list" id="modalRequirements">
+                        <!-- Persyaratan akan diisi oleh JavaScript -->
+                    </ul>
+                </div>
+            </div>
+            <div class="event-modal-footer">
+                <div class="event-status">
+                    <span>Status:</span>
+                    <span class="status-badge status-upcoming" id="modalEventStatus">Akan Datang</span>
+                </div>
+                <button class="btn-register" id="modalRegisterBtn">
+                    <i class="fas fa-user-plus"></i> Daftar Sekarang
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="logo" id="logoClick" style="cursor: pointer;" title="Klik untuk melihat detail logo">
+                <!-- Logo OSIS dengan foto -->
+                <div class="logo-icon">
+                    <img src="osis.jpg" alt="Logo OSIS">
+                </div>
+                <div class="logo-text">
+                    <h1>OSIS</h1>
+                    <p>SMK TRITECH INFORMATIKA</p>
+                </div>
+            </div>
+            
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="navbar" id="navbar">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> HOME</a></li>
+                    <li><a href="pengurus.html"><i class="fas fa-user-friends"></i> PENGURUS OSIS</a></li>
+                    <li><a href="progja.html"><i class="fas fa-tasks"></i> PROGRAM KERJA</a></li>
+                    <li><a href="events.html" class="active"><i class="fas fa-calendar-alt"></i> EVENTS</a></li>
+                    <li><a href="galeri.html"><i class="fas fa-images"></i> GALERI & BERITA</a></li>
+                    <li><a href="pendaftaran.html" class="btn-daftar"><i class="fas fa-user-plus"></i> PENDAFTARAN</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Events OSIS</h1>
+            <p>Jadwal kegiatan dan acara OSIS SMK TRITECH INFORMATIKA</p>
+        </div>
+    </section>
+
+    <!-- KALENDER SECTION -->
+    <section class="calendar-section">
+        <div class="container">
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <h3><i class="fas fa-calendar-alt"></i> Kalender Kegiatan</h3>
+                    <div class="calendar-nav">
+                        <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                        <span class="current-month" id="currentMonth"></span>
+                        <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                
+                <div class="calendar-grid" id="calendarGrid">
+                    <!-- Calendar will be generated by JavaScript -->
+                </div>
+                
+                <div class="calendar-legend">
+                    <div class="legend-item">
+                        <div class="legend-color today"></div>
+                        <span>Hari Ini</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color event"></div>
+                        <span>Ada Event</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="events-calendar">
+        <div class="container">
+            <div class="section-header">
+                <h2>Kegiatan Mendatang</h2>
+                <p>Jadwal lengkap kegiatan OSIS periode 2025/2026</p>
+            </div>
+            
+            <div class="upcoming-events">
+                <div class="events-list">
+                    <!-- Event 1 -->
+                    <div class="event-item" data-event-id="1">
+                        <div class="event-date">
+                            <span class="day">15</span>
+                            <span class="month">JAN</span>
+                        </div>
+                        <div class="event-details">
+                            <h4 onclick="showEventDetail(1)">Open Recruitment Anggota OSIS</h4>
+                            <p><i class="far fa-clock"></i> 08:00 - 15:00 WIB | <i class="fas fa-map-marker-alt"></i> Aula Sekolah</p>
+                            <p class="event-desc">Pendaftaran terbuka untuk semua siswa kelas X dan XI yang ingin bergabung dengan OSIS.</p>
+                        </div>
+                        <button class="btn-event" onclick="showEventDetail(1)">Detail</button>
+                    </div>
+                    
+                    <!-- Event 2 -->
+                    <div class="event-item" data-event-id="2">
+                        <div class="event-date">
+                            <span class="day">22</span>
+                            <span class="month">JAN</span>
+                        </div>
+                        <div class="event-details">
+                            <h4 onclick="showEventDetail(2)">Pelatihan Kepemimpinan Dasar</h4>
+                            <p><i class="far fa-clock"></i> 09:00 - 12:00 WIB | <i class="fas fa-map-marker-alt"></i> Ruang OSIS</p>
+                            <p class="event-desc">Pelatihan untuk pengurus OSIS baru tentang dasar-dasar kepemimpinan dan manajemen organisasi.</p>
+                        </div>
+                        <button class="btn-event" onclick="showEventDetail(2)">Detail</button>
+                    </div>
+                    
+                    <!-- Event 3 -->
+                    <div class="event-item" data-event-id="3">
+                        <div class="event-date">
+                            <span class="day">30</span>
+                            <span class="month">JAN</span>
+                        </div>
+                        <div class="event-details">
+                            <h4 onclick="showEventDetail(3)">Workshop Kreativitas Siswa</h4>
+                            <p><i class="far fa-clock"></i> 10:00 - 14:00 WIB | <i class="fas fa-map-marker-alt"></i> Lab Komputer</p>
+                            <p class="event-desc">Workshop pengembangan kreativitas melalui teknologi digital dan multimedia.</p>
+                        </div>
+                        <button class="btn-event" onclick="showEventDetail(3)">Detail</button>
+                    </div>
+                    
+                    <!-- Event 4 -->
+                    <div class="event-item" data-event-id="4">
+                        <div class="event-date">
+                            <span class="day">5</span>
+                            <span class="month">FEB</span>
+                        </div>
+                        <div class="event-details">
+                            <h4 onclick="showEventDetail(4)">Rapat Perencanaan Bulanan</h4>
+                            <p><i class="far fa-clock"></i> 13:00 - 15:00 WIB | <i class="fas fa-map-marker-alt"></i> Ruang Rapat</p>
+                            <p class="event-desc">Rapat koordinasi seluruh pengurus OSIS untuk membahas program kerja bulan Februari.</p>
+                        </div>
+                        <button class="btn-event" onclick="showEventDetail(4)">Detail</button>
+                    </div>
+                    
+                    <!-- Event 5 -->
+                    <div class="event-item" data-event-id="5">
+                        <div class="event-date">
+                            <span class="day">12-14</span>
+                            <span class="month">FEB</span>
+                        </div>
+                        <div class="event-details">
+                            <h4 onclick="showEventDetail(5)">Turnamen Futsal Antar Kelas</h4>
+                            <p><i class="far fa-clock"></i> 14:00 - 17:00 WIB | <i class="fas fa-map-marker-alt"></i> Lapangan Sekolah</p>
+                            <p class="event-desc">Kompetisi futsal antar kelas dalam rangka memperingati Hari Olahraga Nasional.</p>
+                        </div>
+                        <button class="btn-event" onclick="showEventDetail(5)">Detail</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="past-events">
+                <h3><i class="fas fa-history"></i> Kegiatan yang Telah Berlalu</h3>
+                <div class="past-events-grid">
+                    <div class="past-event-card">
+                        <div class="past-event-img">
+                            <img src="bazar.jpeg" alt="Penghijauan Sekolah" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                            <i class="fas fa-tree" style="display: none;"></i>
+                        </div>
+                        <div class="past-event-content">
+                            <h4 onclick="showPastEventDetail(1)">Penghijauan Sekolah</h4>
+                            <p class="event-date-past"><i class="far fa-calendar"></i> 5 Desember 2025</p>
+                            <p>Kegiatan penanaman pohon dan perawatan taman sekolah dalam rangka menjaga kelestarian lingkungan.</p>
+                            <a href="galeri.html" class="btn-secondary">Lihat Galeri</a>
+                        </div>
+                    </div>
+                    
+                    <div class="past-event-card">
+                        <div class="past-event-img">
+                            <img src="bangkit.jpeg" alt="Penghijauan Sekolah" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                            <i class="fas fa-tree" style="display: none;"></i>
+                        </div>
+                        <div class="past-event-content">
+                            <h4 onclick="showPastEventDetail(2)">Kegiatan Bangkit Bersama</h4>
+                            <p class="event-date-past"><i class="far fa-calendar"></i> 10 Desember 2025</p>
+                            <p>Kegiatan motivasi dan pengembangan diri untuk siswa kelas XII yang akan menghadapi ujian.</p>
+                            <a href="galeri.html" class="btn-secondary">Lihat Galeri</a>
+                        </div>
+                    </div>
+                    
+                    <div class="past-event-card">
+                        <div class="past-event-img">
+                            <img src="upacara.jpeg" alt="Bakti Sosial" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                            <i class="fas fa-hand-holding-heart" style="display: none;"></i>
+                        </div>
+                        <div class="past-event-content">
+                            <h4 onclick="showPastEventDetail(3)">Bakti Sosial ke Panti Asuhan</h4>
+                            <p class="event-date-past"><i class="far fa-calendar"></i> 20 November 2025</p>
+                            <p>Kunjungan dan pemberian bantuan kepada penghuni panti asuhan di sekitar lingkungan sekolah.</p>
+                            <a href="galeri.html" class="btn-secondary">Lihat Galeri</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <img src="osis.jpg" alt="Logo OSIS">
+                        </div>
+                        <div class="logo-text">
+                            <h3>OSIS</h3>
+                            <p>SMK TRITECH INFORMATIKA</p>
+                        </div>
+                    </div>
+                    <p class="footer-description">Membentuk generasi muda yang berkualitas melalui berbagai kegiatan positif dan pengembangan karakter.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Kontak Kami</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i>Jl. Bhayangkara No. 484, Indra Kasih, Kec. Medan Tembung, Kota Medan, Sumatera Utara 20221.</li>
+                        <li><i class="fas fa-phone"></i> (021) 1234-5678</li>
+                        <li><i class="fas fa-envelope"></i> osis@smktritech.sch.id</li>
+                        <li><i class="fas fa-clock"></i> Senin - Jumat, 08:00 - 15:00 WIB</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Newsletter</h4>
+                    <p>Dapatkan informasi terbaru tentang kegiatan OSIS</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Email Anda" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 OSIS SMK TRITECH INFORMATIKA. All Rights Reserved.</p>
+                <p>Designed with <i class="fas fa-heart"></i> by OSIS Web Team</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Event Data
+        const eventsData = {
+            1: {
+                title: "Open Recruitment Anggota OSIS",
+                date: "15 Januari 2025",
+                time: "08:00 - 15:00 WIB",
+                location: "Aula Sekolah",
+                description: "Pendaftaran terbuka untuk semua siswa kelas X dan XI yang ingin bergabung dengan OSIS SMK Tritech Informatika. Kegiatan ini merupakan kesempatan emas bagi siswa yang ingin mengembangkan keterampilan kepemimpinan, organisasi, dan berkontribusi aktif dalam kegiatan sekolah.",
+                participants: ["Siswa Kelas X", "Siswa Kelas XI", "Calon Pengurus OSIS"],
+                requirements: [
+                    "Siswa aktif SMK Tritech Informatika",
+                    "Memiliki kemauan untuk belajar dan berkembang",
+                    "Bersedia mengikuti seluruh proses seleksi",
+                    "Memiliki komitmen untuk aktif dalam organisasi",
+                    "Membawa formulir pendaftaran yang telah diisi"
+                ],
+                status: "upcoming",
+                registerUrl: "pendaftaran.html"
+            },
+            2: {
+                title: "Pelatihan Kepemimpinan Dasar",
+                date: "22 Januari 2025",
+                time: "09:00 - 12:00 WIB",
+                location: "Ruang OSIS",
+                description: "Pelatihan intensif untuk pengurus OSIS baru yang bertujuan membekali mereka dengan keterampilan kepemimpinan dasar, manajemen organisasi, dan komunikasi efektif. Pelatihan ini akan dipandu oleh pembina OSIS dan alumni yang berpengalaman.",
+                participants: ["Pengurus OSIS Baru", "Ketua Kelas", "Perwakilan Organisasi"],
+                requirements: [
+                    "Pengurus OSIS terpilih periode 2025/2026",
+                    "Membawa alat tulis dan notebook",
+                    "Memakai seragam sekolah lengkap",
+                    "Hadir tepat waktu",
+                    "Menyiapkan materi presentasi (jika ada)"
+                ],
+                status: "upcoming",
+                registerUrl: "pendaftaran.html"
+            },
+            3: {
+                title: "Workshop Kreativitas Siswa",
+                date: "30 Januari 2025",
+                time: "10:00 - 14:00 WIB",
+                location: "Lab Komputer",
+                description: "Workshop yang dirancang khusus untuk mengasah kreativitas siswa melalui pemanfaatan teknologi digital. Peserta akan belajar tentang desain grafis dasar, editing video sederhana, dan pembuatan konten digital yang menarik.",
+                participants: ["Siswa SMK Tritech", "Pengurus OSIS", "Tim Kreatif Sekolah"],
+                requirements: [
+                    "Membawa laptop (jika punya)",
+                    "Memiliki minat di bidang kreatif",
+                    "Mendaftar minimal 3 hari sebelumnya",
+                    "Membayar kontribusi Rp 20.000",
+                    "Menginstal software yang diperlukan"
+                ],
+                status: "upcoming",
+                registerUrl: "pendaftaran.html"
+            },
+            4: {
+                title: "Rapat Perencanaan Bulanan",
+                date: "5 Februari 2025",
+                time: "13:00 - 15:00 WIB",
+                location: "Ruang Rapat",
+                description: "Rapat koordinasi bulanan seluruh pengurus OSIS untuk mengevaluasi kegiatan bulan sebelumnya dan merencanakan program kerja bulan Februari. Rapat ini penting untuk menjaga sinkronisasi dan efektivitas kerja organisasi.",
+                participants: ["Pengurus Inti OSIS", "Ketua Bidang", "Sekretaris Bidang"],
+                requirements: [
+                    "Hanya untuk pengurus OSIS",
+                    "Membawa laporan kegiatan bulanan",
+                    "Menyiapkan proposal kegiatan",
+                    "Hadir tepat waktu",
+                    "Membawa agenda rapat"
+                ],
+                status: "upcoming",
+                registerUrl: "#"
+            },
+            5: {
+                title: "Turnamen Futsal Antar Kelas",
+                date: "12-14 Februari 2025",
+                time: "14:00 - 17:00 WIB",
+                location: "Lapangan Sekolah",
+                description: "Kompetisi futsal antar kelas dalam rangka memperingati Hari Olahraga Nasional. Turnamen ini bertujuan untuk meningkatkan semangat sportivitas, kebersamaan, dan kesehatan fisik siswa.",
+                participants: ["Tim Kelas X", "Tim Kelas XI", "Tim Kelas XII"],
+                requirements: [
+                    "Satu tim terdiri dari 7 pemain",
+                    "Memakai seragam olahraga kelas",
+                    "Mendaftar melalui ketua kelas",
+                    "Membayar uang pendaftaran Rp 50.000 per tim",
+                    "Mematuhi peraturan turnamen"
+                ],
+                status: "upcoming",
+                registerUrl: "pendaftaran.html"
+            }
+        };
+
+        // Past Events Data
+        const pastEventsData = {
+            1: {
+                title: "Penghijauan Sekolah",
+                date: "5 Desember 2025",
+                time: "08:00 - 12:00 WIB",
+                location: "Area Sekolah",
+                description: "Kegiatan penanaman pohon dan perawatan taman sekolah dalam rangka menjaga kelestarian lingkungan. Kegiatan ini melibatkan seluruh siswa dan guru dalam upaya membuat sekolah lebih hijau dan asri.",
+                participants: ["Siswa", "Guru", "Staf Sekolah"],
+                requirements: [
+                    "Membawa alat kebun (cangkul, sekop)",
+                    "Memakai pakaian olahraga",
+                    "Membawa air minum",
+                    "Mematuhi arahan panitia",
+                    "Berkontribusi bibit pohon (jika bisa)"
+                ],
+                status: "completed"
+            },
+            2: {
+                title: "Kegiatan Bangkit Bersama",
+                date: "10 Desember 2025",
+                time: "09:00 - 14:00 WIB",
+                location: "Aula Utama",
+                description: "Kegiatan motivasi dan pengembangan diri untuk siswa kelas XII yang akan menghadapi ujian akhir. Acara ini menghadirkan pembicara dari alumni sukses dan psikolog pendidikan.",
+                participants: ["Siswa Kelas XII", "Wali Kelas", "Pembimbing"],
+                requirements: [
+                    "Siswa kelas XII",
+                    "Membawa alat tulis",
+                    "Mengisi formulir pendaftaran",
+                    "Hadir tepat waktu",
+                    "Aktif berpartisipasi"
+                ],
+                status: "completed"
+            },
+            3: {
+                title: "Bakti Sosial ke Panti Asuhan",
+                date: "20 November 2025",
+                time: "08:00 - 15:00 WIB",
+                location: "Panti Asuhan Kasih Bunda",
+                description: "Kunjungan dan pemberian bantuan kepada penghuni panti asuhan di sekitar lingkungan sekolah. Kegiatan ini bertujuan untuk menumbuhkan rasa empati dan kepedulian sosial di kalangan siswa.",
+                participants: ["Pengurus OSIS", "Siswa Relawan", "Pembina"],
+                requirements: [
+                    "Menyumbang barang layak pakai",
+                    "Membawa makanan ringan",
+                    "Memakai seragam sekolah",
+                    "Berkontribusi sukarela",
+                    "Mengikuti aturan panti"
+                ],
+                status: "completed"
+            }
+        };
+
+        // Function to show event detail modal
+        function showEventDetail(eventId) {
+            const event = eventsData[eventId];
+            if (!event) return;
+            
+            document.getElementById('modalEventTitle').innerHTML = `<i class="fas fa-calendar-check"></i> <span>${event.title}</span>`;
+            
+            // Set event info
+            const infoHtml = `
+                <div class="event-info-item">
+                    <i class="far fa-calendar"></i>
+                    <span><strong>Tanggal:</strong> ${event.date}</span>
+                </div>
+                <div class="event-info-item">
+                    <i class="far fa-clock"></i>
+                    <span><strong>Waktu:</strong> ${event.time}</span>
+                </div>
+                <div class="event-info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span><strong>Lokasi:</strong> ${event.location}</span>
+                </div>
+            `;
+            document.getElementById('modalEventInfo').innerHTML = infoHtml;
+            
+            // Set description
+            document.getElementById('modalEventDescription').textContent = event.description;
+            
+            // Set participants
+            let participantsHtml = '';
+            event.participants.forEach(participant => {
+                participantsHtml += `<span class="participant-tag">${participant}</span>`;
+            });
+            document.getElementById('modalParticipants').innerHTML = participantsHtml;
+            
+            // Set requirements
+            let requirementsHtml = '';
+            event.requirements.forEach(req => {
+                requirementsHtml += `<li>${req}</li>`;
+            });
+            document.getElementById('modalRequirements').innerHTML = requirementsHtml;
+            
+            // Set status
+            const statusBadge = document.getElementById('modalEventStatus');
+            statusBadge.className = 'status-badge';
+            statusBadge.classList.add(`status-${event.status}`);
+            statusBadge.textContent = event.status === 'upcoming' ? 'Akan Datang' : 
+                                     event.status === 'ongoing' ? 'Sedang Berlangsung' : 'Selesai';
+            
+            // Set register button
+            const registerBtn = document.getElementById('modalRegisterBtn');
+            if (event.registerUrl && event.registerUrl !== '#') {
+                registerBtn.style.display = 'inline-block';
+                registerBtn.onclick = function() {
+                    window.location.href = event.registerUrl;
+                };
+            } else {
+                registerBtn.style.display = 'none';
+            }
+            
+            // Show modal
+            document.getElementById('eventDetailModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Function to show past event detail
+        function showPastEventDetail(eventId) {
+            const event = pastEventsData[eventId];
+            if (!event) return;
+            
+            showEventDetailInModal(event);
+        }
+
+        function showEventDetailInModal(event) {
+            document.getElementById('modalEventTitle').innerHTML = `<i class="fas fa-history"></i> <span>${event.title}</span>`;
+            
+            // Set event info
+            const infoHtml = `
+                <div class="event-info-item">
+                    <i class="far fa-calendar"></i>
+                    <span><strong>Tanggal:</strong> ${event.date}</span>
+                </div>
+                <div class="event-info-item">
+                    <i class="far fa-clock"></i>
+                    <span><strong>Waktu:</strong> ${event.time}</span>
+                </div>
+                <div class="event-info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span><strong>Lokasi:</strong> ${event.location}</span>
+                </div>
+            `;
+            document.getElementById('modalEventInfo').innerHTML = infoHtml;
+            
+            // Set description
+            document.getElementById('modalEventDescription').textContent = event.description;
+            
+            // Set participants
+            let participantsHtml = '';
+            event.participants.forEach(participant => {
+                participantsHtml += `<span class="participant-tag">${participant}</span>`;
+            });
+            document.getElementById('modalParticipants').innerHTML = participantsHtml;
+            
+            // Set requirements
+            let requirementsHtml = '';
+            event.requirements.forEach(req => {
+                requirementsHtml += `<li>${req}</li>`;
+            });
+            document.getElementById('modalRequirements').innerHTML = requirementsHtml;
+            
+            // Set status
+            const statusBadge = document.getElementById('modalEventStatus');
+            statusBadge.className = 'status-badge';
+            statusBadge.classList.add(`status-${event.status}`);
+            statusBadge.textContent = 'Selesai';
+            
+            // Hide register button for past events
+            document.getElementById('modalRegisterBtn').style.display = 'none';
+            
+            // Show modal
+            document.getElementById('eventDetailModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close modal functionality
+        document.getElementById('closeEventModal').addEventListener('click', function() {
+            document.getElementById('eventDetailModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        document.getElementById('eventDetailModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Close modal with ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.getElementById('eventDetailModal').classList.contains('active')) {
+                document.getElementById('eventDetailModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Logo Lightbox functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const logoClick = document.getElementById('logoClick');
+            const logoLightbox = document.getElementById('logoLightbox');
+            const closeLightboxBtn = document.getElementById('closeLightboxBtn');
+            const closeLightbox = document.getElementById('closeLightbox');
+            
+            // Open lightbox when logo is clicked
+            if (logoClick) {
+                logoClick.addEventListener('click', function() {
+                    logoLightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+            
+            // Close lightbox when close button is clicked
+            if (closeLightboxBtn) {
+                closeLightboxBtn.addEventListener('click', function() {
+                    logoLightbox.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            }
+            
+            // Close lightbox when close button is clicked
+            if (closeLightbox) {
+                closeLightbox.addEventListener('click', function() {
+                    logoLightbox.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            }
+            
+            // Close lightbox when clicking outside the content
+            if (logoLightbox) {
+                logoLightbox.addEventListener('click', function(e) {
+                    if (e.target === logoLightbox) {
+                        logoLightbox.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+            
+            // Close lightbox with ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && logoLightbox.classList.contains('active')) {
+                    logoLightbox.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+
+        // Calendar functionality
+        const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni",
+            "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+        const dayNames = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
+        
+        let currentDate = new Date();
+        
+        // Event dates (day of month)
+        const eventDates = {
+            0: [15, 22, 30], // Januari
+            1: [5, 12, 13, 14], // Februari
+            11: [5, 20] // Desember (bulan ke-11, index 0-based)
+        };
+        
+        function generateCalendar(year, month) {
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const prevLastDay = new Date(year, month, 0);
+            
+            const firstDayIndex = firstDay.getDay();
+            const lastDate = lastDay.getDate();
+            const prevLastDate = prevLastDay.getDate();
+            
+            const calendarGrid = document.getElementById('calendarGrid');
+            calendarGrid.innerHTML = '';
+            
+            // Add day headers
+            dayNames.forEach(day => {
+                const dayHeader = document.createElement('div');
+                dayHeader.className = 'calendar-day-header';
+                dayHeader.textContent = day;
+                calendarGrid.appendChild(dayHeader);
+            });
+            
+            // Previous month days
+            for (let i = firstDayIndex; i > 0; i--) {
+                const day = document.createElement('div');
+                day.className = 'calendar-day other-month disabled';
+                day.textContent = prevLastDate - i + 1;
+                calendarGrid.appendChild(day);
+            }
+            
+            // Current month days
+            const today = new Date();
+            const monthEvents = eventDates[month] || [];
+            
+            for (let i = 1; i <= lastDate; i++) {
+                const day = document.createElement('div');
+                day.className = 'calendar-day';
+                day.textContent = i;
+                
+                // Check if today
+                if (year === today.getFullYear() && 
+                    month === today.getMonth() && 
+                    i === today.getDate()) {
+                    day.classList.add('today');
+                }
+                
+                // Check if has event
+                if (monthEvents.includes(i)) {
+                    day.classList.add('has-event');
+                }
+                
+                calendarGrid.appendChild(day);
+            }
+            
+            // Next month days to fill the grid
+            const totalCells = calendarGrid.children.length - 7; // Exclude headers
+            const remainingCells = 42 - totalCells; // 6 rows * 7 days
+            
+            for (let i = 1; i <= remainingCells; i++) {
+                const day = document.createElement('div');
+                day.className = 'calendar-day other-month disabled';
+                day.textContent = i;
+                calendarGrid.appendChild(day);
+            }
+            
+            // Update month display
+            document.getElementById('currentMonth').textContent = 
+                `${monthNames[month]} ${year}`;
+        }
+        
+        // Navigation
+        document.getElementById('prevMonth').addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        });
+        
+        document.getElementById('nextMonth').addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        });
+        
+        // Initialize calendar
+        generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+    </script>
+</body>
+</html>
